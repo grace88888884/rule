@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.testruleonline.mapper.ActionDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yy.testruleonline.entity.ActionDetail">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="desc" property="desc" />
+        <result column="action_type" property="actionType" />
+        <result column="function_name" property="functionName" />
+        <result column="param_classify_id" property="paramClassifyId" />
+        <result column="param_classify_value" property="paramClassifyValue" />
+    </resultMap>
+
+</mapper>
