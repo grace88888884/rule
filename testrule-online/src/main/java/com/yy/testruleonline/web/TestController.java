@@ -27,6 +27,15 @@ public class TestController {
     }
 
 
+    @ResponseBody
+    @RequestMapping("/refreshRuleBoList")
+    public boolean refreshRuleBoList() {
+        Map<Integer, RuleBo> ruleBoMap = ruleManager.refreshRuleBoList();
+        Constants.ruleBoMap = ruleBoMap;
+        return false;
+    }
+
+
     
     @ResponseBody
     @RequestMapping("/test")

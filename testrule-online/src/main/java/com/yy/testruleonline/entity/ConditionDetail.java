@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.yy.testruleonline.enums.OperationType;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * <p>
@@ -35,7 +36,7 @@ public class ConditionDetail extends Model<ConditionDetail> {
     private OperationType operation;
 
     @TableField("threshold_value")
-    private String thresholdValue;
+    private BigDecimal thresholdValue;
 
     @TableField("param_classify_value")
     private Integer paramClassifyValue;
@@ -75,11 +76,11 @@ public class ConditionDetail extends Model<ConditionDetail> {
     public void setOperation(OperationType operation) {
         this.operation = operation;
     }
-    public String getThresholdValue() {
+    public BigDecimal getThresholdValue() {
         return thresholdValue;
     }
 
-    public void setThresholdValue(String thresholdValue) {
+    public void setThresholdValue(BigDecimal thresholdValue) {
         this.thresholdValue = thresholdValue;
     }
     public Integer getParamClassifyValue() {
