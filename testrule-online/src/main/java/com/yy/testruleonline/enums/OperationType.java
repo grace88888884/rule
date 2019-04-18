@@ -6,9 +6,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.io.Serializable;
 
 public enum OperationType implements IEnum {
-    EQU("等于"),
-    GRT("大于"),
-    GRE("大于等于");
+    EQ("等于"),
+    GT("大于"),
+    GE("大于等于"),
+    LT("小于"),
+    LE("小于等于");
 
 
     private String desc;
