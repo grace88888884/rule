@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.yy.testruleonline.enums.OperationType;
+
 import java.io.Serializable;
 
 /**
@@ -12,7 +14,7 @@ import java.io.Serializable;
  * 
  * </p>
  *
- * @author Mht
+ * @author yy
  * @since 2019-04-17
  */
 @TableName("condition_detail")
@@ -30,11 +32,13 @@ public class ConditionDetail extends Model<ConditionDetail> {
     @TableField("param_classify_id")
     private Integer paramClassifyId;
 
-    @TableField("operation_id")
-    private Integer operationId;
+    private OperationType operation;
 
     @TableField("threshold_value")
     private String thresholdValue;
+
+    @TableField("param_classify_value")
+    private Integer paramClassifyValue;
 
     public Integer getId() {
         return id;
@@ -64,12 +68,12 @@ public class ConditionDetail extends Model<ConditionDetail> {
     public void setParamClassifyId(Integer paramClassifyId) {
         this.paramClassifyId = paramClassifyId;
     }
-    public Integer getOperationId() {
-        return operationId;
+    public OperationType getOperation() {
+        return operation;
     }
 
-    public void setOperationId(Integer operationId) {
-        this.operationId = operationId;
+    public void setOperation(OperationType operation) {
+        this.operation = operation;
     }
     public String getThresholdValue() {
         return thresholdValue;
@@ -77,6 +81,13 @@ public class ConditionDetail extends Model<ConditionDetail> {
 
     public void setThresholdValue(String thresholdValue) {
         this.thresholdValue = thresholdValue;
+    }
+    public Integer getParamClassifyValue() {
+        return paramClassifyValue;
+    }
+
+    public void setParamClassifyValue(Integer paramClassifyValue) {
+        this.paramClassifyValue = paramClassifyValue;
     }
 
     @Override
@@ -91,8 +102,9 @@ public class ConditionDetail extends Model<ConditionDetail> {
         ", name=" + name +
         ", desc=" + desc +
         ", paramClassifyId=" + paramClassifyId +
-        ", operationId=" + operationId +
+        ", operation=" + operation +
         ", thresholdValue=" + thresholdValue +
+        ", paramClassifyValue=" + paramClassifyValue +
         "}";
     }
 }

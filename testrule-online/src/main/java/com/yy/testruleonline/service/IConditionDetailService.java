@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.service.IService;
  *  服务类
  * </p>
  *
- * @author Mht
+ * @author yy
  * @since 2019-04-17
  */
 public interface IConditionDetailService extends IService<ConditionDetail> {

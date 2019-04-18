@@ -11,6 +11,7 @@
         <result column="function_name" property="functionName" />
         <result column="param_classify_id" property="paramClassifyId" />
         <result column="param_classify_value" property="paramClassifyValue" />
+        <result column="threshold_value" property="thresholdValue" />
     </resultMap>
 
 </mapper>

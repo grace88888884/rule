@@ -12,7 +12,7 @@ import java.io.Serializable;
  * 
  * </p>
  *
- * @author Mht
+ * @author yy
  * @since 2019-04-17
  */
 @TableName("action_detail")
@@ -37,6 +37,9 @@ public class ActionDetail extends Model<ActionDetail> {
 
     @TableField("param_classify_value")
     private Integer paramClassifyValue;
+
+    @TableField("threshold_value")
+    private String thresholdValue;
 
     public Integer getId() {
         return id;
@@ -87,6 +90,13 @@ public class ActionDetail extends Model<ActionDetail> {
     public void setParamClassifyValue(Integer paramClassifyValue) {
         this.paramClassifyValue = paramClassifyValue;
     }
+    public String getThresholdValue() {
+        return thresholdValue;
+    }
+
+    public void setThresholdValue(String thresholdValue) {
+        this.thresholdValue = thresholdValue;
+    }
 
     @Override
     protected Serializable pkVal() {
@@ -103,6 +113,7 @@ public class ActionDetail extends Model<ActionDetail> {
         ", functionName=" + functionName +
         ", paramClassifyId=" + paramClassifyId +
         ", paramClassifyValue=" + paramClassifyValue +
+        ", thresholdValue=" + thresholdValue +
         "}";
     }
 }

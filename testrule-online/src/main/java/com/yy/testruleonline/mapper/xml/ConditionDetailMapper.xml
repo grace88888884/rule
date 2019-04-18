@@ -8,8 +8,9 @@
         <result column="name" property="name" />
         <result column="desc" property="desc" />
         <result column="param_classify_id" property="paramClassifyId" />
-        <result column="operation_id" property="operationId" />
+        <result column="operation" property="operation" />
         <result column="threshold_value" property="thresholdValue" />
+        <result column="param_classify_value" property="paramClassifyValue" />
     </resultMap>
 
 </mapper>

@@ -7,7 +7,9 @@ import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.yy.testruleonline.enums.RelationType;
 
+import java.beans.Transient;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * <p>
@@ -34,6 +36,17 @@ public class ConditionGroup extends Model<ConditionGroup> {
 
     @TableField("condition_detail_id_list")
     private String conditionDetailIdList;
+
+    @TableField(exist = false)
+    private Set<Integer> conditionDetailIdSet;
+
+    public Set<Integer> getConditionDetailIdSet() {
+        return conditionDetailIdSet;
+    }
+
+    public void setConditionDetailIdSet(Set<Integer> conditionDetailIdSet) {
+        this.conditionDetailIdSet = conditionDetailIdSet;
+    }
 
     public Integer getId() {
         return id;

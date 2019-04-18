@@ -3,10 +3,12 @@ package com.yy.testruleonline.function;
 import com.googlecode.aviator.runtime.function.AbstractFunction;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 import com.googlecode.aviator.runtime.type.AviatorString;
+import com.yy.testruleonline.enums.FunctionType;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
-
-public class FieldsFunction extends AbstractFunction {  
+@Component
+public class FieldsFunction extends AbstractRuleFunction {  
   
         @Override  
         public AviatorObject call(Map<String, Object> env, AviatorObject fieldsStrObj) {  
@@ -29,9 +31,11 @@ public class FieldsFunction extends AbstractFunction {
   
             //TODO key 长多过长，会影响redis性能  
             return new AviatorString(redisKey.toString());  
-        }  
-  
-        public String getName() {  
-            return "fields";  
-        }  
-    }  
+        }
+
+
+    @Override
+    public FunctionType getFuctionType() {
+        return FunctionType.FIELDS;
+    }
+}  

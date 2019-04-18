@@ -4,10 +4,12 @@ import com.googlecode.aviator.runtime.function.AbstractFunction;
 import com.googlecode.aviator.runtime.function.FunctionUtils;
 import com.googlecode.aviator.runtime.type.AviatorLong;
 import com.googlecode.aviator.runtime.type.AviatorObject;
+import com.yy.testruleonline.enums.FunctionType;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
-
-public class RedisCountFunction extends AbstractFunction {  
+@Component
+public class RedisCountFunction extends AbstractRuleFunction {  
   
         @Override  
         public AviatorObject call(Map<String, Object> env, AviatorObject arg1, AviatorObject arg2, AviatorObject arg3) {  
@@ -27,9 +29,10 @@ public class RedisCountFunction extends AbstractFunction {
             System.out.println("get redis : " + redisKey);  
             //这里查询redis获得活动的值；  
             return 10000;  
-        }  
-  
-        public String getName() {  
-            return "redisCount";  
-        }  
+        }
+
+    @Override
+    public FunctionType getFuctionType() {
+        return FunctionType.REDIS_COUNT;
+    }
     }  
