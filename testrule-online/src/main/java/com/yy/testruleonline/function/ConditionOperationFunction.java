@@ -5,7 +5,7 @@ import com.googlecode.aviator.runtime.type.AviatorObject;
 import com.yy.testruleonline.bo.ConditionDetailBo;
 import com.yy.testruleonline.enums.FunctionType;
 import com.yy.testruleonline.enums.OperationType;
-import com.yy.testruleonline.enums.ParamClassifyType;
+import com.yy.testruleonline.enums.TagType;
 import com.yy.testruleonline.utils.Constants;
 import com.yy.testruleonline.utils.Parser;
 import org.springframework.stereotype.Component;
@@ -25,16 +25,16 @@ public class ConditionOperationFunction extends AbstractRuleFunction {
         ConditionDetailBo conditionDetailBo = (ConditionDetailBo) env.get(Constants.conditionDetailBo);
         OperationType operationType = conditionDetailBo.getConditionDetail().getOperation();
         HashMap<String,String> input = (HashMap<String, String>) env.get(conditionInput);
-        ParamClassifyType type = conditionDetailBo.getParamClassify().getType();
+        TagType type = conditionDetailBo.getTag().getType();
         Object inputParam = Parser.parseParamClassifyType(input, conditionDetailBo, type);
         Integer compareNum = null;
-        if (type.equals(ParamClassifyType.NUM)) {
+        if (type.equals(TagType.NUM)) {
             compareNum = ((BigDecimal) inputParam).compareTo(conditionDetailBo.getConditionDetail().getThresholdValue());
         }
         if (inputParam != null) {
             switch (operationType) {
                 case EQ:
-                    if (ParamClassifyType.ENUM.equals(conditionDetailBo.getParamClassify().getType())&&inputParam.equals(conditionDetailBo.getParam().getId())) {
+                    if (TagType.ENUM.equals(conditionDetailBo.getTag().getType())&&inputParam.equals(conditionDetailBo.getTagRange().getId())) {
                         returnResult = AviatorBoolean.TRUE;
                     }else if (compareNum != null && compareNum == 0) {
                         returnResult = AviatorBoolean.TRUE;

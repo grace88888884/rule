@@ -1,17 +1,17 @@
 package com.yy.testruleonline.utils;
 
 import com.yy.testruleonline.bo.ConditionDetailBo;
-import com.yy.testruleonline.enums.ParamClassifyType;
+import com.yy.testruleonline.enums.TagType;
 
 import java.math.BigDecimal;
 import java.util.Map;
 
 public class Parser {
-    public static Object parseParamClassifyType(Map<String, String> input, ConditionDetailBo conditionDetailBo, ParamClassifyType paramClassifyType) {
+    public static Object parseParamClassifyType(Map<String, String> input, ConditionDetailBo conditionDetailBo, TagType tagType) {
         Object parseResult = null;
-        String parseStr = input.get(conditionDetailBo.getParamClassify().getName());
+        String parseStr = input.get(conditionDetailBo.getTag().getName());
         if(parseStr!=null) {
-            switch (paramClassifyType) {
+            switch (tagType) {
                 case NUM:
                     parseResult = new BigDecimal(parseStr);
                     break;

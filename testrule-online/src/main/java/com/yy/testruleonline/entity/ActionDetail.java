@@ -32,11 +32,11 @@ public class ActionDetail extends Model<ActionDetail> {
     @TableField("function_name")
     private String functionName;
 
-    @TableField("param_classify_id")
-    private Integer paramClassifyId;
+    @TableField("tag_id")
+    private Integer tagId;
 
-    @TableField("param_classify_value")
-    private Integer paramClassifyValue;
+    @TableField("tag_value")
+    private Integer tagValue;
 
     @TableField("threshold_value")
     private String thresholdValue;
@@ -76,19 +76,19 @@ public class ActionDetail extends Model<ActionDetail> {
     public void setFunctionName(String functionName) {
         this.functionName = functionName;
     }
-    public Integer getParamClassifyId() {
-        return paramClassifyId;
+    public Integer getTagId() {
+        return tagId;
     }
 
-    public void setParamClassifyId(Integer paramClassifyId) {
-        this.paramClassifyId = paramClassifyId;
+    public void setTagId(Integer tagId) {
+        this.tagId = tagId;
     }
-    public Integer getParamClassifyValue() {
-        return paramClassifyValue;
+    public Integer getTagValue() {
+        return tagValue;
     }
 
-    public void setParamClassifyValue(Integer paramClassifyValue) {
-        this.paramClassifyValue = paramClassifyValue;
+    public void setTagValue(Integer tagValue) {
+        this.tagValue = tagValue;
     }
     public String getThresholdValue() {
         return thresholdValue;
@@ -111,8 +111,8 @@ public class ActionDetail extends Model<ActionDetail> {
         ", desc=" + desc +
         ", actionType=" + actionType +
         ", functionName=" + functionName +
-        ", paramClassifyId=" + paramClassifyId +
-        ", paramClassifyValue=" + paramClassifyValue +
+        ", tagId=" + tagId +
+        ", tagValue=" + tagValue +
         ", thresholdValue=" + thresholdValue +
         "}";
     }

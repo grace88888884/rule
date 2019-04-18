@@ -32,7 +32,7 @@ public class TestController {
     public boolean refreshRuleBoList() {
         Map<Integer, RuleBo> ruleBoMap = ruleManager.refreshRuleBoList();
         Constants.ruleBoMap = ruleBoMap;
-        return false;
+        return true;
     }
 
 

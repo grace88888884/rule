@@ -10,11 +10,11 @@ import org.springframework.stereotype.Controller;
  *  前端控制器
  * </p>
  *
- * @author Mht
- * @since 2019-04-17
+ * @author yy
+ * @since 2019-04-18
  */
 @Controller
-@RequestMapping("/param")
-public class ParamController {
+@RequestMapping("/tagRange")
+public class TagRangeController {
 
 }

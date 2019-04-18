@@ -2,13 +2,13 @@ package com.yy.testruleonline.bo;
 
 import com.yy.testruleonline.entity.ActionDetail;
 import com.yy.testruleonline.entity.ConditionGroup;
-import com.yy.testruleonline.entity.Param;
-import com.yy.testruleonline.entity.ParamClassify;
+import com.yy.testruleonline.entity.TagRange;
+import com.yy.testruleonline.entity.Tag;
 
 public class ActionDetailBo {
     private ActionDetail actionDetail;
-    private ParamClassify paramClassify;
-    private Param param;
+    private Tag tag;
+    private TagRange tagRange;
 
     public ActionDetail getActionDetail() {
         return actionDetail;
@@ -18,19 +18,19 @@ public class ActionDetailBo {
         this.actionDetail = actionDetail;
     }
 
-    public ParamClassify getParamClassify() {
-        return paramClassify;
+    public Tag getTag() {
+        return tag;
     }
 
-    public void setParamClassify(ParamClassify paramClassify) {
-        this.paramClassify = paramClassify;
+    public void setTag(Tag tag) {
+        this.tag = tag;
     }
 
-    public Param getParam() {
-        return param;
+    public TagRange getTagRange() {
+        return tagRange;
     }
 
-    public void setParam(Param param) {
-        this.param = param;
+    public void setTagRange(TagRange tagRange) {
+        this.tagRange = tagRange;
     }
 }

@@ -30,16 +30,16 @@ public class ConditionDetail extends Model<ConditionDetail> {
 
     private String desc;
 
-    @TableField("param_classify_id")
-    private Integer paramClassifyId;
+    @TableField("tag_id")
+    private Integer tagId;
 
     private OperationType operation;
 
     @TableField("threshold_value")
     private BigDecimal thresholdValue;
 
-    @TableField("param_classify_value")
-    private Integer paramClassifyValue;
+    @TableField("tag_value")
+    private Integer tagValue;
 
     public Integer getId() {
         return id;
@@ -62,12 +62,12 @@ public class ConditionDetail extends Model<ConditionDetail> {
     public void setDesc(String desc) {
         this.desc = desc;
     }
-    public Integer getParamClassifyId() {
-        return paramClassifyId;
+    public Integer getTagId() {
+        return tagId;
     }
 
-    public void setParamClassifyId(Integer paramClassifyId) {
-        this.paramClassifyId = paramClassifyId;
+    public void setTagId(Integer tagId) {
+        this.tagId = tagId;
     }
     public OperationType getOperation() {
         return operation;
@@ -83,12 +83,12 @@ public class ConditionDetail extends Model<ConditionDetail> {
     public void setThresholdValue(BigDecimal thresholdValue) {
         this.thresholdValue = thresholdValue;
     }
-    public Integer getParamClassifyValue() {
-        return paramClassifyValue;
+    public Integer getTagValue() {
+        return tagValue;
     }
 
-    public void setParamClassifyValue(Integer paramClassifyValue) {
-        this.paramClassifyValue = paramClassifyValue;
+    public void setTagValue(Integer tagValue) {
+        this.tagValue = tagValue;
     }
 
     @Override
@@ -102,10 +102,10 @@ public class ConditionDetail extends Model<ConditionDetail> {
         "id=" + id +
         ", name=" + name +
         ", desc=" + desc +
-        ", paramClassifyId=" + paramClassifyId +
+        ", tagId=" + tagId +
         ", operation=" + operation +
         ", thresholdValue=" + thresholdValue +
-        ", paramClassifyValue=" + paramClassifyValue +
+        ", tagValue=" + tagValue +
         "}";
     }
 }

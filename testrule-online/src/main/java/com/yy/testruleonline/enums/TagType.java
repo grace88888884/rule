@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.io.Serializable;
 
-public enum ParamClassifyType implements IEnum {
+public enum TagType implements IEnum {
     ENUM("E", "枚举"),
     STRING("S", "字符"),
     NUM("N", "数值型");
     private String code;
     private String desc;
 
-    ParamClassifyType(final String code, final String desc) {
+    TagType(final String code, final String desc) {
         this.code = code;
         this.desc = desc;
     }

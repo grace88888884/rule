@@ -1,7 +1,5 @@
 package com.yy.testruleonline.bo;
 
-import com.yy.testruleonline.entity.ActionDetail;
-import com.yy.testruleonline.entity.ConditionGroup;
 
 public class RuleBo {
     private ActionDetailBo actionDetailBo;

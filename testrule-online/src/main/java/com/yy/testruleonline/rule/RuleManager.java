@@ -30,10 +30,10 @@ public class RuleManager {
     @Autowired
     public IActionDetailService actionDetailService;
     @Autowired
-    public IParamService paramService;
+    public ITagRangeService tagRangeService;
 
     @Autowired
-    public IParamClassifyService paramClassifyService;
+    public ITagService tagService;
 
 
     public Map<String, Object> executeRule(Map<String, String> param) {
@@ -63,9 +63,9 @@ public class RuleManager {
                 resultMap.put(actionExpress, executeResult);
                 break;
             case PARAM:
-                ParamClassify paramClassify = actionDetailBo.getParamClassify();
-                Param param = actionDetailBo.getParam();
-                resultMap.put(paramClassify.getName(), param);
+                Tag tag = actionDetailBo.getTag();
+                TagRange param = actionDetailBo.getTagRange();
+                resultMap.put(tag.getName(), param);
                 break;
         }
         return resultMap;
@@ -74,10 +74,10 @@ public class RuleManager {
     private boolean executeCondition(Map<String, String> param, RuleBo ruleBo) {
         ConditionGroupBo conditionGroupBo = ruleBo.getConditionGroupBo();
         String expression = conditionGroupEquation;
-        Map<String, Object> params = new HashMap<>();
-        params.put(Constants.conditionGroupBo, conditionGroupBo);
-        params.put(conditionInput, param);
-        boolean isSatisfied = (boolean) AviatorEvaluator.execute(expression, params);
+        Map<String, Object> tagRanges = new HashMap<>();
+        tagRanges.put(Constants.conditionGroupBo, conditionGroupBo);
+        tagRanges.put(conditionInput, param);
+        boolean isSatisfied = (boolean) AviatorEvaluator.execute(expression, tagRanges);
         System.out.println("isSatisfiedCondition:" + isSatisfied + "\n");
         return isSatisfied;
     }
@@ -127,18 +127,18 @@ public class RuleManager {
         List<ActionDetail> actionDetails = actionDetailService.selectBatchIds(actionIdList);
         Map<Integer, ActionDetail> actionDetailMap = actionDetails.stream().collect(Collectors.toMap(ActionDetail::getId, t -> t));
 
-        List<Integer> paramClassifyIdList = conditionDetails.stream().map(g -> g.getParamClassifyId()).collect(Collectors.toList());
-        List<Integer> paramClassifyIdList2 = actionDetails.stream().map(g -> g.getParamClassifyId()).collect(Collectors.toList());
-        paramClassifyIdList.addAll(paramClassifyIdList2);
-        List<ParamClassify> paramClassifies = paramClassifyService.selectBatchIds(paramClassifyIdList);
-        Map<Integer, ParamClassify> paramClassifyMap = paramClassifies.stream().collect(Collectors.toMap(ParamClassify::getId, t -> t));
+        List<Integer> tagIdList = conditionDetails.stream().map(g -> g.getTagId()).collect(Collectors.toList());
+        List<Integer> tagIdList2 = actionDetails.stream().map(g -> g.getTagId()).collect(Collectors.toList());
+        tagIdList.addAll(tagIdList2);
+        List<Tag> tags = tagService.selectBatchIds(tagIdList);
+        Map<Integer, Tag> tagMap = tags.stream().collect(Collectors.toMap(Tag::getId, t -> t));
 
 
-        List<Integer> paramClassifyValueList = conditionDetails.stream().map(g -> g.getParamClassifyValue()).collect(Collectors.toList());
-        List<Integer> paramClassifyValueList2 = actionDetails.stream().map(g -> g.getParamClassifyValue()).collect(Collectors.toList());
-        paramClassifyValueList.addAll(paramClassifyValueList2);
-        List<Param> params = paramService.selectBatchIds(paramClassifyValueList);
-        Map<Integer, Param> paramMap = params.stream().collect(Collectors.toMap(Param::getId, t -> t));
+        List<Integer> tagValueList = conditionDetails.stream().map(g -> g.getTagValue()).collect(Collectors.toList());
+        List<Integer> tagValueList2 = actionDetails.stream().map(g -> g.getTagValue()).collect(Collectors.toList());
+        tagValueList.addAll(tagValueList2);
+        List<TagRange> tagRanges = tagRangeService.selectBatchIds(tagValueList);
+        Map<Integer, TagRange> paramMap = tagRanges.stream().collect(Collectors.toMap(TagRange::getId, t -> t));
 
 
         Map<Integer, RuleBo> ruleBoMap = new HashMap();
@@ -152,12 +152,12 @@ public class RuleManager {
 
             conditionGroup.getConditionDetailIdSet().forEach(t -> {
                 ConditionDetail conditionDetail = conditionDetailMap.get(t);
-                ParamClassify paramClassify = paramClassifyMap.get(conditionDetail.getParamClassifyId());
+                Tag tag = tagMap.get(conditionDetail.getTagId());
                 ConditionDetailBo conditionDetailBo = new ConditionDetailBo();
-                conditionDetailBo.setParamClassify(paramClassify);
-                if (conditionDetail.getParamClassifyValue() != null) {
-                    Param param = paramMap.get(conditionDetail.getParamClassifyValue());
-                    conditionDetailBo.setParam(param);
+                conditionDetailBo.setTag(tag);
+                if (conditionDetail.getTagValue() != null) {
+                    TagRange tagRange = paramMap.get(conditionDetail.getTagValue());
+                    conditionDetailBo.setTagRange(tagRange);
                 }
                 conditionDetailBo.setConditionDetail(conditionDetail);
                 conditionGroupBo.getConditionDetailBoList().add(conditionDetailBo);
@@ -165,11 +165,11 @@ public class RuleManager {
             });
             ActionDetailBo actionDetailBo = new ActionDetailBo();
             actionDetailBo.setActionDetail(actionDetail);
-            Optional.ofNullable(paramClassifyMap.get(actionDetail.getParamClassifyId()))
-                    .ifPresent(t -> actionDetailBo.setParamClassify(paramClassifyMap.get(actionDetail.getParamClassifyId())));
+            Optional.ofNullable(tagMap.get(actionDetail.getTagId()))
+                    .ifPresent(t -> actionDetailBo.setTag(tagMap.get(actionDetail.getTagId())));
 
-            Optional.ofNullable(actionDetail.getParamClassifyValue())
-                    .ifPresent(t -> actionDetailBo.setParam(paramMap.get(actionDetail.getParamClassifyValue())));
+            Optional.ofNullable(actionDetail.getTagValue())
+                    .ifPresent(t -> actionDetailBo.setTagRange(paramMap.get(actionDetail.getTagValue())));
 
 
             ruleBo.setConditionGroupBo(conditionGroupBo);

@@ -7,10 +7,10 @@
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="desc" property="desc" />
-        <result column="param_classify_id" property="paramClassifyId" />
+        <result column="tag_id" property="tagId" />
         <result column="operation" property="operation" />
         <result column="threshold_value" property="thresholdValue" />
-        <result column="param_classify_value" property="paramClassifyValue" />
+        <result column="tag_value" property="tagValue" />
     </resultMap>
 
 </mapper>

@@ -3,8 +3,7 @@ package com.yy.testruleonline.entity;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.yy.testruleonline.enums.ParamClassifyType;
+import com.yy.testruleonline.enums.TagType;
 
 import java.io.Serializable;
 
@@ -13,11 +12,10 @@ import java.io.Serializable;
  * 
  * </p>
  *
- * @author Mht
- * @since 2019-04-17
+ * @author yy
+ * @since 2019-04-18
  */
-@TableName("param_classify")
-public class ParamClassify extends Model<ParamClassify> {
+public class Tag extends Model<Tag> {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,7 +26,7 @@ public class ParamClassify extends Model<ParamClassify> {
 
     private String desc;
 
-    private ParamClassifyType type;
+    private TagType type;
 
     public Integer getId() {
         return id;
@@ -51,11 +49,11 @@ public class ParamClassify extends Model<ParamClassify> {
     public void setDesc(String desc) {
         this.desc = desc;
     }
-    public ParamClassifyType getType() {
+    public TagType getType() {
         return type;
     }
 
-    public void setType(ParamClassifyType type) {
+    public void setType(TagType type) {
         this.type = type;
     }
 
@@ -66,7 +64,7 @@ public class ParamClassify extends Model<ParamClassify> {
 
     @Override
     public String toString() {
-        return "ParamClassify{" +
+        return "Tag{" +
         "id=" + id +
         ", name=" + name +
         ", desc=" + desc +

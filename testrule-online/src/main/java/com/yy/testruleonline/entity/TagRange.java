@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
 
 /**
@@ -11,10 +12,11 @@ import java.io.Serializable;
  * 
  * </p>
  *
- * @author Mht
- * @since 2019-04-17
+ * @author yy
+ * @since 2019-04-18
  */
-public class Param extends Model<Param> {
+@TableName("tag_range")
+public class TagRange extends Model<TagRange> {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,8 +27,8 @@ public class Param extends Model<Param> {
 
     private String desc;
 
-    @TableField("classify_id")
-    private Integer classifyId;
+    @TableField("tag_id")
+    private Integer tagId;
 
     public Integer getId() {
         return id;
@@ -50,11 +52,11 @@ public class Param extends Model<Param> {
         this.desc = desc;
     }
     public Integer getClassifyId() {
-        return classifyId;
+        return tagId;
     }
 
-    public void setClassifyId(Integer classifyId) {
-        this.classifyId = classifyId;
+    public void setClassifyId(Integer tagId) {
+        this.tagId = tagId;
     }
 
     @Override
@@ -64,11 +66,11 @@ public class Param extends Model<Param> {
 
     @Override
     public String toString() {
-        return "Param{" +
+        return "TagRange{" +
         "id=" + id +
         ", name=" + name +
         ", desc=" + desc +
-        ", classifyId=" + classifyId +
+        ", tagId=" + tagId +
         "}";
     }
 }
