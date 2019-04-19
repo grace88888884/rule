@@ -9,6 +9,7 @@
         <result column="desc" property="desc" />
         <result column="condition_relation" property="conditionRelation" />
         <result column="condition_detail_name_list" property="conditionDetailNameList" />
+        <result column="child_condition_group_name_list" property="childConditionGroupNameList" />
     </resultMap>
 
 </mapper>

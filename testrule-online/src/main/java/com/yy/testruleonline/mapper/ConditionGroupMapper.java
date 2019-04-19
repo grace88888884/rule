@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -31,6 +32,19 @@ public interface ConditionGroupMapper extends BaseMapper<ConditionGroup> {
             "#{item} "+
             "</foreach>" +
             "</script>")
-    List<ConditionGroup> selectByconditionGroupNames(@Param("conditionGroupNames") List<String> conditionGroupNames);
+    List<ConditionGroup> selectByConditionGroupNames(@Param("conditionGroupNames") Collection<String> conditionGroupNames);
+
+    @Select("<script>" +
+            "select\n" +
+            " *\n" +
+            "from\n" +
+            " condition_group \n" +
+            "where\n" +
+            "root_condition_group_name in" +
+            "<foreach collection='rootConditionGroupNames' item='item' open='(' separator=',' close=')'>" +
+            "#{item} "+
+            "</foreach>" +
+            "</script>")
+    List<ConditionGroup> selectByRootConditionGroupName(@Param("rootConditionGroupNames") Collection<String> rootConditionGroupNames);
 
 }

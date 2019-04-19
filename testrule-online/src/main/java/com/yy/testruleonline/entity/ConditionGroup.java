@@ -34,18 +34,44 @@ public class ConditionGroup extends Model<ConditionGroup> {
     @TableField("condition_relation")
     private RelationType conditionRelation;
 
+    @TableField("root_condition_group_name")
+    private RelationType rootConditionGroupName;
+
     @TableField("condition_detail_name_list")
     private String conditionDetailNameList;
 
+    @TableField("child_condition_group_name_list")
+    private String childConditionGroupNameList;
+
     @TableField(exist = false)
     private Set<String> conditionDetailNameSet;
+
+    @TableField(exist = false)
+    private Set<String> childConditionGroupNameSet;
+
+
+    public RelationType getRootConditionGroupName() {
+        return rootConditionGroupName;
+    }
+
+    public void setRootConditionGroupName(RelationType rootConditionGroupName) {
+        this.rootConditionGroupName = rootConditionGroupName;
+    }
 
     public Set<String> getConditionDetailNameSet() {
         return conditionDetailNameSet;
     }
 
+    public Set<String> getChildConditionGroupNameSet() {
+        return childConditionGroupNameSet;
+    }
+
     public void setConditionDetailNameSet(Set<String> conditionDetailNameSet) {
         this.conditionDetailNameSet = conditionDetailNameSet;
+    }
+
+    public void setChildConditionGroupNameSet(Set<String> childConditionGroupNameSet) {
+        this.childConditionGroupNameSet = childConditionGroupNameSet;
     }
 
     public Integer getId() {
@@ -84,6 +110,14 @@ public class ConditionGroup extends Model<ConditionGroup> {
         this.conditionDetailNameList = conditionDetailNameList;
     }
 
+    public String getChildConditionGroupNameList() {
+        return childConditionGroupNameList;
+    }
+
+    public void setChildConditionGroupNameList(String childConditionGroupNameList) {
+        this.childConditionGroupNameList = childConditionGroupNameList;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -97,6 +131,7 @@ public class ConditionGroup extends Model<ConditionGroup> {
         ", desc=" + desc +
         ", conditionRelation=" + conditionRelation +
         ", conditionDetailNameList=" + conditionDetailNameList +
+        ", childConditionGroupNameList=" + childConditionGroupNameList +
         "}";
     }
 }
