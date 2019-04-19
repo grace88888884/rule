@@ -34,18 +34,18 @@ public class ConditionGroup extends Model<ConditionGroup> {
     @TableField("condition_relation")
     private RelationType conditionRelation;
 
-    @TableField("condition_detail_id_list")
-    private String conditionDetailIdList;
+    @TableField("condition_detail_name_list")
+    private String conditionDetailNameList;
 
     @TableField(exist = false)
-    private Set<Integer> conditionDetailIdSet;
+    private Set<String> conditionDetailNameSet;
 
-    public Set<Integer> getConditionDetailIdSet() {
-        return conditionDetailIdSet;
+    public Set<String> getConditionDetailNameSet() {
+        return conditionDetailNameSet;
     }
 
-    public void setConditionDetailIdSet(Set<Integer> conditionDetailIdSet) {
-        this.conditionDetailIdSet = conditionDetailIdSet;
+    public void setConditionDetailNameSet(Set<String> conditionDetailNameSet) {
+        this.conditionDetailNameSet = conditionDetailNameSet;
     }
 
     public Integer getId() {
@@ -76,12 +76,12 @@ public class ConditionGroup extends Model<ConditionGroup> {
     public void setConditionRelation(RelationType conditionRelation) {
         this.conditionRelation = conditionRelation;
     }
-    public String getConditionDetailIdList() {
-        return conditionDetailIdList;
+    public String getConditionDetailNameList() {
+        return conditionDetailNameList;
     }
 
-    public void setConditionDetailIdList(String conditionDetailIdList) {
-        this.conditionDetailIdList = conditionDetailIdList;
+    public void setConditionDetailNameList(String conditionDetailNameList) {
+        this.conditionDetailNameList = conditionDetailNameList;
     }
 
     @Override
@@ -96,7 +96,7 @@ public class ConditionGroup extends Model<ConditionGroup> {
         ", name=" + name +
         ", desc=" + desc +
         ", conditionRelation=" + conditionRelation +
-        ", conditionDetailIdList=" + conditionDetailIdList +
+        ", conditionDetailNameList=" + conditionDetailNameList +
         "}";
     }
 }

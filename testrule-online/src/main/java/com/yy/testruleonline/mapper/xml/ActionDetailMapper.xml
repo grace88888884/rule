@@ -9,7 +9,7 @@
         <result column="desc" property="desc" />
         <result column="action_type" property="actionType" />
         <result column="function_name" property="functionName" />
-        <result column="tag_id" property="tagId" />
+        <result column="tag_name" property="tagName" />
         <result column="tag_value" property="tagValue" />
         <result column="threshold_value" property="thresholdValue" />
     </resultMap>

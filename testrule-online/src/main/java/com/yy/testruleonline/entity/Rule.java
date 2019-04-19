@@ -24,14 +24,14 @@ public class Rule extends Model<Rule> {
 
     private String desc;
 
-    @TableField("condition_group_id")
-    private Integer conditionGroupId;
+    @TableField("condition_group_name")
+    private String conditionGroupName;
 
-    @TableField("action_id")
-    private Integer actionId;
+    @TableField("action_name")
+    private String actionName;
 
-    @TableField("else_action_id")
-    private Integer elseActionId;
+    @TableField("else_action_name")
+    private String elseActionName;
 
     public Integer getId() {
         return id;
@@ -54,26 +54,26 @@ public class Rule extends Model<Rule> {
     public void setDesc(String desc) {
         this.desc = desc;
     }
-    public Integer getConditionGroupId() {
-        return conditionGroupId;
+    public String getConditionGroupName() {
+        return conditionGroupName;
     }
 
-    public void setConditionGroupId(Integer conditionGroupId) {
-        this.conditionGroupId = conditionGroupId;
+    public void setConditionGroupName(String conditionGroupName) {
+        this.conditionGroupName = conditionGroupName;
     }
-    public Integer getActionId() {
-        return actionId;
-    }
-
-    public void setActionId(Integer actionId) {
-        this.actionId = actionId;
-    }
-    public Integer getElseActionId() {
-        return elseActionId;
+    public String getActionName() {
+        return actionName;
     }
 
-    public void setElseActionId(Integer elseActionId) {
-        this.elseActionId = elseActionId;
+    public void setActionName(String actionName) {
+        this.actionName = actionName;
+    }
+    public String getElseActionName() {
+        return elseActionName;
+    }
+
+    public void setElseActionName(String elseActionName) {
+        this.elseActionName = elseActionName;
     }
 
     @Override
@@ -87,9 +87,9 @@ public class Rule extends Model<Rule> {
         "id=" + id +
         ", name=" + name +
         ", desc=" + desc +
-        ", conditionGroupId=" + conditionGroupId +
-        ", actionId=" + actionId +
-        ", elseActionId=" + elseActionId +
+        ", conditionGroupName=" + conditionGroupName +
+        ", actionName=" + actionName +
+        ", elseActionName=" + elseActionName +
         "}";
     }
 }

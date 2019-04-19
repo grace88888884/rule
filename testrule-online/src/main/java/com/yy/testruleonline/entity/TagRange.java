@@ -27,8 +27,8 @@ public class TagRange extends Model<TagRange> {
 
     private String desc;
 
-    @TableField("tag_id")
-    private Integer tagId;
+    @TableField("tag_name")
+    private String tagName;
 
     public Integer getId() {
         return id;
@@ -51,12 +51,12 @@ public class TagRange extends Model<TagRange> {
     public void setDesc(String desc) {
         this.desc = desc;
     }
-    public Integer getClassifyId() {
-        return tagId;
+    public String getTagName() {
+        return tagName;
     }
 
-    public void setClassifyId(Integer tagId) {
-        this.tagId = tagId;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     @Override
@@ -70,7 +70,7 @@ public class TagRange extends Model<TagRange> {
         "id=" + id +
         ", name=" + name +
         ", desc=" + desc +
-        ", tagId=" + tagId +
+        ", tagName=" + tagName +
         "}";
     }
 }

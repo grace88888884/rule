@@ -8,7 +8,7 @@
         <result column="name" property="name" />
         <result column="desc" property="desc" />
         <result column="condition_relation" property="conditionRelation" />
-        <result column="condition_detail_id_list" property="conditionDetailIdList" />
+        <result column="condition_detail_name_list" property="conditionDetailNameList" />
     </resultMap>
 
 </mapper>

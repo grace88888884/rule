@@ -12,5 +12,6 @@ import com.baomidou.mybatisplus.service.IService;
  * @since 2019-04-17
  */
 public interface IConditionGroupService extends IService<ConditionGroup> {
+    
 
 }

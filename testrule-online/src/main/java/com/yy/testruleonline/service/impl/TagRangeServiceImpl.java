@@ -30,7 +30,7 @@ public class TagRangeServiceImpl extends ServiceImpl<TagRangeMapper, TagRange> i
     public boolean addTag(Tag tag, List<TagRange> tagRanges) {
         tagService.insert(tag);
         for(TagRange tagRange :tagRanges){
-            tagRange.setClassifyId(tag.getId());
+            tagRange.setTagName(tag.getName());
         }
         insertBatch(tagRanges);
         return false;

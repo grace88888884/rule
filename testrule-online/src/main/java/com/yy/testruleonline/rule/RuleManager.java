@@ -7,6 +7,7 @@ import com.yy.testruleonline.bo.ConditionGroupBo;
 import com.yy.testruleonline.bo.RuleBo;
 import com.yy.testruleonline.entity.*;
 import com.yy.testruleonline.enums.RuleRunResult;
+import com.yy.testruleonline.mapper.*;
 import com.yy.testruleonline.service.*;
 import com.yy.testruleonline.utils.Constants;
 import org.apache.logging.log4j.util.Strings;
@@ -21,25 +22,32 @@ import static com.yy.testruleonline.utils.Constants.conditionInput;
 
 @Component
 public class RuleManager {
+//    @Autowired
+//    public IConditionGroupService conditionGroupService; 
+    
     @Autowired
-    public IConditionGroupService conditionGroupService;
+    public ConditionGroupMapper conditionGroupMapper;
+    
     @Autowired
-    public IConditionDetailService conditionDetailService;
+    public ConditionDetailMapper conditionDetailMapper;
+//    @Autowired
+//    public IConditionDetailService conditionDetailService;
     @Autowired
     public IRuleService ruleService;
+    
     @Autowired
-    public IActionDetailService actionDetailService;
+    public ActionDetailMapper actionDetailMapper;
     @Autowired
-    public ITagRangeService tagRangeService;
+    public TagRangeMapper tagRangeMapper;
 
     @Autowired
-    public ITagService tagService;
+    public TagMapper tagMapper;
 
 
     public Map<String, Object> executeRule(Map<String, String> param) {
         Map<String, Object> resultMap = new HashMap<>();
-        String ruleId = param.get("ruleId");
-        RuleBo ruleBo = getRuleBoList().get(Integer.valueOf(ruleId));
+        String ruleName = param.get("ruleName");
+        RuleBo ruleBo = getRuleBoList().get(ruleName);
         boolean isSatisfied = executeCondition(param, ruleBo);
         if (isSatisfied) {
             resultMap = runAction(ruleBo.getActionDetailBo());
@@ -83,76 +91,74 @@ public class RuleManager {
     }
 
 
-    public Map<Integer, RuleBo> getRuleBoList() {
-        Map<Integer, RuleBo> ruleBoMap = Constants.ruleBoMap;
+    public Map<String, RuleBo> getRuleBoList() {
+        Map<String, RuleBo> ruleBoMap = Constants.ruleBoMap;
         if (ruleBoMap == null) {
             ruleBoMap = refreshRuleBoList();
         }
         return ruleBoMap;
     }
 
-    public Map<Integer, RuleBo> refreshRuleBoList() {
+    public Map<String, RuleBo> refreshRuleBoList() {
         List<Rule> ruleList = ruleService.selectList(null);
-        List<Integer> conditionGroupIdList = new ArrayList<>();
-        Set<Integer> actionIdList = new HashSet<>();
-        Set<Integer> elseActionIdList = new HashSet<>();
+        List<String> conditionGroupNameList = new ArrayList<>();
+        Set<String> actionNameList = new HashSet<>();
+        Set<String> elseActionNameList = new HashSet<>();
         ruleList.forEach(r -> {
-            Integer conditionGroupId = r.getConditionGroupId();
-            Integer actionId = r.getActionId();
-            Integer elseActionId = r.getElseActionId();
-            conditionGroupIdList.add(conditionGroupId);
-            actionIdList.add(actionId);
-            Optional.ofNullable(elseActionId).ifPresent(t -> elseActionIdList.add(t));
+            String conditionGroupName = r.getConditionGroupName();
+            String actionName = r.getActionName();
+            String elseActionName = r.getElseActionName();
+            conditionGroupNameList.add(conditionGroupName);
+            actionNameList.add(actionName);
+            Optional.ofNullable(elseActionName).ifPresent(t -> elseActionNameList.add(t));
         });
 
-        actionIdList.addAll(elseActionIdList);
-        List<ConditionGroup> conditionGroups = conditionGroupService.selectBatchIds(conditionGroupIdList);
-        Map<Integer, ConditionGroup> conditionGroupMap = conditionGroups.stream().collect(Collectors.toMap(ConditionGroup::getId, t -> t));
+        actionNameList.addAll(elseActionNameList);
+        List<ConditionGroup> conditionGroups = conditionGroupMapper.selectByconditionGroupNames(conditionGroupNameList);
+        Map<String, ConditionGroup> conditionGroupMap = conditionGroups.stream().collect(Collectors.toMap(ConditionGroup::getName, t -> t));
 
-        Set<Integer> conditionDetailIdSet = new HashSet<>();
+        Set<String> conditionDetailNameSet = new HashSet<>();
         conditionGroups.forEach(t -> {
-            String conditionDetailIdListStr = t.getConditionDetailIdList();
-            if (Strings.isNotEmpty(conditionDetailIdListStr)) {
-                String[] conditionDetailIds = conditionDetailIdListStr.split("|");
-                for (int i = 0; i < conditionDetailIds.length; i++) {
-                    if (!"|".equals(conditionDetailIds[i])) {
-                        conditionDetailIdSet.add(Integer.parseInt(conditionDetailIds[i]));
-                    }
+            String conditionDetailNameListStr = t.getConditionDetailNameList();
+            if (Strings.isNotEmpty(conditionDetailNameListStr)) {
+                String[] conditionDetailNames = conditionDetailNameListStr.split("\\|");
+                for (int i = 0; i < conditionDetailNames.length; i++) {
+                        conditionDetailNameSet.add(conditionDetailNames[i]);
                 }
-                t.setConditionDetailIdSet(conditionDetailIdSet);
+                t.setConditionDetailNameSet(conditionDetailNameSet);
             }
         });
-        List<ConditionDetail> conditionDetails = conditionDetailService.selectBatchIds(conditionDetailIdSet);
-        Map<Integer, ConditionDetail> conditionDetailMap = conditionDetails.stream().collect(Collectors.toMap(ConditionDetail::getId, t -> t));
-        List<ActionDetail> actionDetails = actionDetailService.selectBatchIds(actionIdList);
-        Map<Integer, ActionDetail> actionDetailMap = actionDetails.stream().collect(Collectors.toMap(ActionDetail::getId, t -> t));
+        List<ConditionDetail> conditionDetails = conditionDetailMapper.selectByConditionGroupNames(conditionDetailNameSet);
+        Map<String, ConditionDetail> conditionDetailMap = conditionDetails.stream().collect(Collectors.toMap(ConditionDetail::getName, t -> t));
+        List<ActionDetail> actionDetails = actionDetailMapper.selectByActionDetailNames(actionNameList);
+        Map<String, ActionDetail> actionDetailMap = actionDetails.stream().collect(Collectors.toMap(ActionDetail::getName, t -> t));
 
-        List<Integer> tagIdList = conditionDetails.stream().map(g -> g.getTagId()).collect(Collectors.toList());
-        List<Integer> tagIdList2 = actionDetails.stream().map(g -> g.getTagId()).collect(Collectors.toList());
-        tagIdList.addAll(tagIdList2);
-        List<Tag> tags = tagService.selectBatchIds(tagIdList);
-        Map<Integer, Tag> tagMap = tags.stream().collect(Collectors.toMap(Tag::getId, t -> t));
+        List<String> tagNameList = conditionDetails.stream().map(g -> g.getTagName()).collect(Collectors.toList());
+        List<String> tagNameList2 = actionDetails.stream().map(g -> g.getTagName()).collect(Collectors.toList());
+        tagNameList.addAll(tagNameList2);
+        List<Tag> tags = tagMapper.selectByTagNames(tagNameList);
+        Map<String, Tag> tagMap = tags.stream().collect(Collectors.toMap(Tag::getName, t -> t));
 
 
-        List<Integer> tagValueList = conditionDetails.stream().map(g -> g.getTagValue()).collect(Collectors.toList());
-        List<Integer> tagValueList2 = actionDetails.stream().map(g -> g.getTagValue()).collect(Collectors.toList());
+        List<String> tagValueList = conditionDetails.stream().map(g -> g.getTagValue()).collect(Collectors.toList());
+        List<String> tagValueList2 = actionDetails.stream().map(g -> g.getTagValue()).collect(Collectors.toList());
         tagValueList.addAll(tagValueList2);
-        List<TagRange> tagRanges = tagRangeService.selectBatchIds(tagValueList);
-        Map<Integer, TagRange> paramMap = tagRanges.stream().collect(Collectors.toMap(TagRange::getId, t -> t));
+        List<TagRange> tagRanges = tagRangeMapper.selectByTagRanges(tagValueList);
+        Map<String, TagRange> paramMap = tagRanges.stream().collect(Collectors.toMap(TagRange::getName, t -> t));
 
 
-        Map<Integer, RuleBo> ruleBoMap = new HashMap();
+        Map<String, RuleBo> ruleBoMap = new HashMap();
         ruleList.forEach(r -> {
-            ConditionGroup conditionGroup = conditionGroupMap.get(r.getConditionGroupId());
-            ActionDetail actionDetail = actionDetailMap.get(r.getActionId());
-            ActionDetail elseActionId = actionDetailMap.get(r.getElseActionId());
+            ConditionGroup conditionGroup = conditionGroupMap.get(r.getConditionGroupName());
+            ActionDetail actionDetail = actionDetailMap.get(r.getActionName());
+            ActionDetail elseActionName = actionDetailMap.get(r.getElseActionName());
             RuleBo ruleBo = new RuleBo();
             ConditionGroupBo conditionGroupBo = new ConditionGroupBo();
             conditionGroupBo.setConditionGroup(conditionGroup);
 
-            conditionGroup.getConditionDetailIdSet().forEach(t -> {
+            conditionGroup.getConditionDetailNameSet().forEach(t -> {
                 ConditionDetail conditionDetail = conditionDetailMap.get(t);
-                Tag tag = tagMap.get(conditionDetail.getTagId());
+                Tag tag = tagMap.get(conditionDetail.getTagName());
                 ConditionDetailBo conditionDetailBo = new ConditionDetailBo();
                 conditionDetailBo.setTag(tag);
                 if (conditionDetail.getTagValue() != null) {
@@ -165,8 +171,8 @@ public class RuleManager {
             });
             ActionDetailBo actionDetailBo = new ActionDetailBo();
             actionDetailBo.setActionDetail(actionDetail);
-            Optional.ofNullable(tagMap.get(actionDetail.getTagId()))
-                    .ifPresent(t -> actionDetailBo.setTag(tagMap.get(actionDetail.getTagId())));
+            Optional.ofNullable(tagMap.get(actionDetail.getTagName()))
+                    .ifPresent(t -> actionDetailBo.setTag(tagMap.get(actionDetail.getTagName())));
 
             Optional.ofNullable(actionDetail.getTagValue())
                     .ifPresent(t -> actionDetailBo.setTagRange(paramMap.get(actionDetail.getTagValue())));
@@ -175,7 +181,7 @@ public class RuleManager {
             ruleBo.setConditionGroupBo(conditionGroupBo);
             ruleBo.setActionDetailBo(actionDetailBo);
 //            ruleBo.setElseActionDetailBo(actionDetailBo);//todo
-            ruleBoMap.put(r.getId(), ruleBo);
+            ruleBoMap.put(r.getName(), ruleBo);
         });
 
         return ruleBoMap;

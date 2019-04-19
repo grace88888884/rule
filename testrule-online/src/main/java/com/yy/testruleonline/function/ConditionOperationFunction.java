@@ -34,7 +34,7 @@ public class ConditionOperationFunction extends AbstractRuleFunction {
         if (inputParam != null) {
             switch (operationType) {
                 case EQ:
-                    if (TagType.ENUM.equals(conditionDetailBo.getTag().getType())&&inputParam.equals(conditionDetailBo.getTagRange().getId())) {
+                    if (TagType.ENUM.equals(conditionDetailBo.getTag().getType())&&inputParam.equals(conditionDetailBo.getTagRange().getName())) {
                         returnResult = AviatorBoolean.TRUE;
                     }else if (compareNum != null && compareNum == 0) {
                         returnResult = AviatorBoolean.TRUE;

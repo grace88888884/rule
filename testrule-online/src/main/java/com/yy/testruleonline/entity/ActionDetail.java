@@ -32,11 +32,11 @@ public class ActionDetail extends Model<ActionDetail> {
     @TableField("function_name")
     private String functionName;
 
-    @TableField("tag_id")
-    private Integer tagId;
+    @TableField("tag_name")
+    private String tagName;
 
     @TableField("tag_value")
-    private Integer tagValue;
+    private String tagValue;
 
     @TableField("threshold_value")
     private String thresholdValue;
@@ -76,18 +76,18 @@ public class ActionDetail extends Model<ActionDetail> {
     public void setFunctionName(String functionName) {
         this.functionName = functionName;
     }
-    public Integer getTagId() {
-        return tagId;
+    public String getTagName() {
+        return tagName;
     }
 
-    public void setTagId(Integer tagId) {
-        this.tagId = tagId;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
-    public Integer getTagValue() {
+    public String getTagValue() {
         return tagValue;
     }
 
-    public void setTagValue(Integer tagValue) {
+    public void setTagValue(String tagValue) {
         this.tagValue = tagValue;
     }
     public String getThresholdValue() {
@@ -111,7 +111,7 @@ public class ActionDetail extends Model<ActionDetail> {
         ", desc=" + desc +
         ", actionType=" + actionType +
         ", functionName=" + functionName +
-        ", tagId=" + tagId +
+        ", tagName=" + tagName +
         ", tagValue=" + tagValue +
         ", thresholdValue=" + thresholdValue +
         "}";

@@ -16,8 +16,6 @@ public class Parser {
                     parseResult = new BigDecimal(parseStr);
                     break;
                 case ENUM:
-                    parseResult = Integer.valueOf(parseStr);
-                    break;
                 case STRING:
                     parseResult = parseStr;
                     break;

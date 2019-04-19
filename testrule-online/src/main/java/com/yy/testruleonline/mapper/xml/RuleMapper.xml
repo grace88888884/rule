@@ -7,9 +7,9 @@
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="desc" property="desc" />
-        <result column="condition_group_id" property="conditionGroupId" />
-        <result column="action_id" property="actionId" />
-        <result column="else_action_id" property="elseActionId" />
+        <result column="condition_group_name" property="conditionGroupName" />
+        <result column="action_name" property="actionName" />
+        <result column="else_action_name" property="elseActionName" />
     </resultMap>
 
 </mapper>

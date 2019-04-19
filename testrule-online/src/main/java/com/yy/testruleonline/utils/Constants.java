@@ -5,7 +5,7 @@ import com.yy.testruleonline.bo.RuleBo;
 import java.util.Map;
 
 public class Constants {
-   public static Map<Integer, RuleBo> ruleBoMap;
+   public static Map<String, RuleBo> ruleBoMap;
 
    public final static String conditionGroupEquation = "conditionGroupRelation()";
    public final static String conditionOperationEquation = "conditionOperation()";

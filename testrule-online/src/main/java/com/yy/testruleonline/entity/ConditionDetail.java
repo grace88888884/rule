@@ -30,8 +30,8 @@ public class ConditionDetail extends Model<ConditionDetail> {
 
     private String desc;
 
-    @TableField("tag_id")
-    private Integer tagId;
+    @TableField("tag_name")
+    private String tagName;
 
     private OperationType operation;
 
@@ -39,7 +39,7 @@ public class ConditionDetail extends Model<ConditionDetail> {
     private BigDecimal thresholdValue;
 
     @TableField("tag_value")
-    private Integer tagValue;
+    private String tagValue;
 
     public Integer getId() {
         return id;
@@ -62,12 +62,12 @@ public class ConditionDetail extends Model<ConditionDetail> {
     public void setDesc(String desc) {
         this.desc = desc;
     }
-    public Integer getTagId() {
-        return tagId;
+    public String getTagName() {
+        return tagName;
     }
 
-    public void setTagId(Integer tagId) {
-        this.tagId = tagId;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
     public OperationType getOperation() {
         return operation;
@@ -83,11 +83,11 @@ public class ConditionDetail extends Model<ConditionDetail> {
     public void setThresholdValue(BigDecimal thresholdValue) {
         this.thresholdValue = thresholdValue;
     }
-    public Integer getTagValue() {
+    public String getTagValue() {
         return tagValue;
     }
 
-    public void setTagValue(Integer tagValue) {
+    public void setTagValue(String tagValue) {
         this.tagValue = tagValue;
     }
 
@@ -102,7 +102,7 @@ public class ConditionDetail extends Model<ConditionDetail> {
         "id=" + id +
         ", name=" + name +
         ", desc=" + desc +
-        ", tagId=" + tagId +
+        ", tagName=" + tagName +
         ", operation=" + operation +
         ", thresholdValue=" + thresholdValue +
         ", tagValue=" + tagValue +

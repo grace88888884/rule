@@ -21,7 +21,7 @@ public class TestController {
     @ResponseBody
     @RequestMapping("/init")
     public boolean init() {
-        Map<Integer, RuleBo> ruleBoMap = ruleManager.getRuleBoList();
+        Map<String, RuleBo> ruleBoMap = ruleManager.getRuleBoList();
         Constants.ruleBoMap = ruleBoMap;
         return false;
     }
@@ -30,7 +30,7 @@ public class TestController {
     @ResponseBody
     @RequestMapping("/refreshRuleBoList")
     public boolean refreshRuleBoList() {
-        Map<Integer, RuleBo> ruleBoMap = ruleManager.refreshRuleBoList();
+        Map<String, RuleBo> ruleBoMap = ruleManager.refreshRuleBoList();
         Constants.ruleBoMap = ruleBoMap;
         return true;
     }
