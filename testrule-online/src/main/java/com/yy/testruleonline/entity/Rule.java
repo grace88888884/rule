@@ -27,11 +27,11 @@ public class Rule extends Model<Rule> {
     @TableField("condition_group_name")
     private String conditionGroupName;
 
-    @TableField("action_name")
-    private String actionName;
+    @TableField("action_name_list")
+    private String actionNameList;
 
-    @TableField("else_action_name")
-    private String elseActionName;
+    @TableField("else_action_name_list")
+    private String elseActionNameList;
 
     public Integer getId() {
         return id;
@@ -62,18 +62,18 @@ public class Rule extends Model<Rule> {
         this.conditionGroupName = conditionGroupName;
     }
     public String getActionName() {
-        return actionName;
+        return actionNameList;
     }
 
-    public void setActionName(String actionName) {
-        this.actionName = actionName;
+    public void setActionNameList(String actionNameList) {
+        this.actionNameList = actionNameList;
     }
-    public String getElseActionName() {
-        return elseActionName;
+    public String getElseActionNameList() {
+        return elseActionNameList;
     }
 
-    public void setElseActionName(String elseActionName) {
-        this.elseActionName = elseActionName;
+    public void setElseActionNameList(String elseActionNameList) {
+        this.elseActionNameList = elseActionNameList;
     }
 
     @Override
@@ -88,8 +88,8 @@ public class Rule extends Model<Rule> {
         ", name=" + name +
         ", desc=" + desc +
         ", conditionGroupName=" + conditionGroupName +
-        ", actionName=" + actionName +
-        ", elseActionName=" + elseActionName +
+        ", actionNameList=" + actionNameList +
+        ", elseActionNameList=" + elseActionNameList +
         "}";
     }
 }

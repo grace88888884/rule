@@ -42,17 +42,17 @@
 //        List<Rule> ruleList = ruleService.selectList(null);
 //        List<Integer> conditionGroupNameList = new ArrayList<>();
 //        Set<Integer> actionNameList = new HashSet<>();
-//        Set<Integer> elseActionNameList = new HashSet<>();
+//        Set<Integer> elseActionNameListList = new HashSet<>();
 //        ruleList.forEach(r -> {
 //            Integer conditionGroupName = r.getConditionGroupName();
-//            Integer actionName = r.getActionName();
-//            Integer elseActionName = r.getElseActionName();
+//            Integer actionNameList = r.getActionName();
+//            Integer elseActionNameList = r.getElseActionNameList();
 //            conditionGroupNameList.add(conditionGroupName);
-//            actionNameList.add(actionName);
-//            Optional.ofNullable(elseActionName).ifPresent(t -> elseActionNameList.add(t));
+//            actionNameList.add(actionNameList);
+//            Optional.ofNullable(elseActionNameList).ifPresent(t -> elseActionNameListList.add(t));
 //        });
 //
-//        actionNameList.addAll(elseActionNameList);
+//        actionNameList.addAll(elseActionNameListList);
 //        List<ConditionGroup> conditionGroups = conditionGroupService.selectBatchIds(conditionGroupNameList);
 //        Map<Integer, ConditionGroup> conditionGroupMap = conditionGroups.stream().collect(Collectors.toMap(ConditionGroup::getId, t -> t));
 //
@@ -92,7 +92,7 @@
 //        ruleList.forEach(r -> {
 //            ConditionGroup conditionGroup = conditionGroupMap.get(r.getConditionGroupName());
 //            ActionDetail actionDetail = actionDetailMap.get(r.getActionName());
-//            ActionDetail elseActionName = actionDetailMap.get(r.getElseActionName());
+//            ActionDetail elseActionNameList = actionDetailMap.get(r.getElseActionNameList());
 //            RuleBo ruleBo = new RuleBo();
 //            ConditionGroupBo conditionGroupBo = new ConditionGroupBo();
 //            conditionGroupBo.setConditionGroup(conditionGroup);

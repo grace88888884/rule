@@ -8,8 +8,8 @@
         <result column="name" property="name" />
         <result column="desc" property="desc" />
         <result column="condition_group_name" property="conditionGroupName" />
-        <result column="action_name" property="actionName" />
-        <result column="else_action_name" property="elseActionName" />
+        <result column="action_name_list" property="actionNameList" />
+        <result column="else_action_name_list" property="elseActionNameList" />
     </resultMap>
 
 </mapper>

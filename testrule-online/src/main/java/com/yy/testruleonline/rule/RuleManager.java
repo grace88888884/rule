@@ -103,17 +103,17 @@ public class RuleManager {
         List<Rule> ruleList = ruleService.selectList(null);
         List<String> conditionGroupNameList = new ArrayList<>();
         Set<String> actionNameList = new HashSet<>();
-        Set<String> elseActionNameList = new HashSet<>();
+        Set<String> elseActionNameListList = new HashSet<>();
         ruleList.forEach(r -> {
             String conditionGroupName = r.getConditionGroupName();
-            String actionName = r.getActionName();
-            String elseActionName = r.getElseActionName();
+            String actionNameListStr = r.getActionName();
+            String elseActionNameList = r.getElseActionNameList();
             conditionGroupNameList.add(conditionGroupName);
-            actionNameList.add(actionName);
-            Optional.ofNullable(elseActionName).ifPresent(t -> elseActionNameList.add(t));
+            actionNameList.add(actionNameListStr);
+            Optional.ofNullable(elseActionNameList).ifPresent(t -> elseActionNameListList.add(t));
         });
 
-        actionNameList.addAll(elseActionNameList);
+        actionNameList.addAll(elseActionNameListList);
         List<ConditionGroup> conditionGroups = conditionGroupMapper.selectByconditionGroupNames(conditionGroupNameList);
         Map<String, ConditionGroup> conditionGroupMap = conditionGroups.stream().collect(Collectors.toMap(ConditionGroup::getName, t -> t));
 
@@ -151,7 +151,7 @@ public class RuleManager {
         ruleList.forEach(r -> {
             ConditionGroup conditionGroup = conditionGroupMap.get(r.getConditionGroupName());
             ActionDetail actionDetail = actionDetailMap.get(r.getActionName());
-            ActionDetail elseActionName = actionDetailMap.get(r.getElseActionName());
+            ActionDetail elseActionNameList = actionDetailMap.get(r.getElseActionNameList());
             RuleBo ruleBo = new RuleBo();
             ConditionGroupBo conditionGroupBo = new ConditionGroupBo();
             conditionGroupBo.setConditionGroup(conditionGroup);
