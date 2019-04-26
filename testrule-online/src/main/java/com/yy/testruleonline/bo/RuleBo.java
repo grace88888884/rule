@@ -1,25 +1,27 @@
 package com.yy.testruleonline.bo;
 
 
+import java.util.List;
+
 public class RuleBo {
-    private ActionDetailBo actionDetailBo;
-    private ActionDetailBo elseActionDetailBo;
+    private List<ActionDetailBo> actionDetailBoList;
+    private List<ActionDetailBo> elseActionDetailBoList;
     private ConditionGroupBo conditionGroupBo;
 
-    public ActionDetailBo getActionDetailBo() {
-        return actionDetailBo;
+    public List<ActionDetailBo> getActionDetailBoList() {
+        return actionDetailBoList;
     }
 
-    public void setActionDetailBo(ActionDetailBo actionDetailBo) {
-        this.actionDetailBo = actionDetailBo;
+    public void setActionDetailBoList(List<ActionDetailBo> actionDetailBoList) {
+        this.actionDetailBoList = actionDetailBoList;
     }
 
-    public ActionDetailBo getElseActionDetailBo() {
-        return elseActionDetailBo;
+    public List<ActionDetailBo> getElseActionDetailBoList() {
+        return elseActionDetailBoList;
     }
 
-    public void setElseActionDetailBo(ActionDetailBo elseActionDetailBo) {
-        this.elseActionDetailBo = elseActionDetailBo;
+    public void setElseActionDetailBoList(List<ActionDetailBo> elseActionDetailBoList) {
+        this.elseActionDetailBoList = elseActionDetailBoList;
     }
 
     public ConditionGroupBo getConditionGroupBo() {

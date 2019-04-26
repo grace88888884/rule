@@ -13,6 +13,7 @@ import com.yy.testruleonline.utils.Constants;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -44,16 +45,27 @@ public class RuleManager {
 
 
     public Map<String, Object> executeRule(Map<String, String> param) {
-        Map<String, Object> resultMap = new HashMap<>();
+        final Map<String, Object> resultMap = new HashMap<>();
         String ruleName = param.get("ruleName");
         RuleBo ruleBo = getRuleBoList().get(ruleName);
         boolean isSatisfied = executeCondition(param, ruleBo);
-        if (isSatisfied) {
-            resultMap = runAction(ruleBo.getActionDetailBo());
-            resultMap.put(Constants.resultMap.ruleRunActionResultStr, RuleRunResult.RUN_ACTION);
-        } else if (ruleBo.getElseActionDetailBo() != null) {
-            resultMap = runAction(ruleBo.getElseActionDetailBo());
-            resultMap.put(Constants.resultMap.ruleRunActionResultStr, RuleRunResult.RUN_ELSE_ACTION);
+        if (isSatisfied && ruleBo.getActionDetailBoList() != null && ruleBo.getActionDetailBoList().size() > 0) {
+            ruleBo.getActionDetailBoList().forEach(t -> {
+                Map<String, Object> actionResultMap = runAction(t);
+                if (actionResultMap != null && actionResultMap.size() > 0) {
+                    resultMap.putAll(actionResultMap);
+                }
+                resultMap.put(Constants.resultMap.ruleRunActionResultStr, RuleRunResult.RUN_ACTION);
+            });
+
+        } else if (ruleBo.getElseActionDetailBoList() != null && ruleBo.getElseActionDetailBoList().size() > 0) {
+            ruleBo.getElseActionDetailBoList().forEach(t -> {
+                Map<String, Object> actionResultMap = runAction(t);
+                if (actionResultMap != null && actionResultMap.size() > 0) {
+                    resultMap.putAll(actionResultMap);
+                }
+                resultMap.put(Constants.resultMap.ruleRunActionResultStr, RuleRunResult.RUN_ELSE_ACTION);
+            });
         } else {
             resultMap.put(Constants.resultMap.ruleRunActionResultStr, RuleRunResult.RUN_NOTHINT);
         }
@@ -80,11 +92,11 @@ public class RuleManager {
 
     private boolean executeCondition(Map<String, String> param, RuleBo ruleBo) {
         ConditionGroupBo conditionGroupBo = ruleBo.getConditionGroupBo();
-        String expression = conditionGroupEquation;
+        StringBuilder stringBuilder = new StringBuilder().append(conditionGroupEquation).append("('").append(Constants.conditionGroupBo).append("')");
         Map<String, Object> tagRanges = new HashMap<>();
         tagRanges.put(Constants.conditionGroupBo, conditionGroupBo);
         tagRanges.put(conditionInput, param);
-        boolean isSatisfied = (boolean) AviatorEvaluator.execute(expression, tagRanges);
+        boolean isSatisfied = (boolean) AviatorEvaluator.execute(stringBuilder.toString(), tagRanges);
         System.out.println("isSatisfiedCondition:" + isSatisfied + "\n");
         return isSatisfied;
     }
@@ -102,21 +114,31 @@ public class RuleManager {
         List<Rule> ruleList = ruleService.selectList(null);
         Set<String> conditionGroupNameList = new HashSet<>();
         Set<String> actionNameList = new HashSet<>();
-        Set<String> elseActionNameListList = new HashSet<>();
+        Set<String> elseActionNameList = new HashSet<>();
         ruleList.forEach(r -> {
             String conditionGroupName = r.getConditionGroupName();
-            String actionNameListStr = r.getActionName();
-            String elseActionNameList = r.getElseActionNameList();
+            String actionNameListStr = r.getActionNameList();
+            String elseActionNameListStr = r.getElseActionNameList();
+            if(!Strings.isBlank(actionNameListStr)){
+                String[] actionNameStrs = actionNameListStr.split("\\|");
+                for (int i = 0; i < actionNameStrs.length; i++) {
+                    actionNameList.add(actionNameStrs[i]);
+                }
+
+            } 
+            
+            if(!Strings.isBlank(elseActionNameListStr)){
+                String[] elseNameStrs = elseActionNameListStr.split("\\|");
+                for (int i = 0; i < elseNameStrs.length; i++) {
+                    elseActionNameList.add(elseNameStrs[i]);
+                }
+
+            }
             conditionGroupNameList.add(conditionGroupName);
-            actionNameList.add(actionNameListStr);
-            Optional.ofNullable(elseActionNameList).ifPresent(t -> elseActionNameListList.add(t));
         });
 
-        actionNameList.addAll(elseActionNameListList);
+        actionNameList.addAll(elseActionNameList);
         List<ConditionGroup> conditionGroups = conditionGroupMapper.selectByConditionGroupNames(conditionGroupNameList);
-
-        
-   
 
         List<String> conditionRootNameList = conditionGroups.stream().map(g -> g.getName()).collect(Collectors.toList());
         conditionGroups = conditionGroupMapper.selectByRootConditionGroupName(conditionRootNameList);
@@ -178,26 +200,52 @@ public class RuleManager {
 
         Map<String, RuleBo> ruleBoMap = new HashMap();
         ruleList.forEach(r -> {
-            ActionDetail actionDetail = actionDetailMap.get(r.getActionName());
-            ActionDetail elseActionNameList = actionDetailMap.get(r.getElseActionNameList());
+            List<ActionDetailBo> actionDetailBoList = new ArrayList<>();
+            if (r.getActionNameList() != null) {
+                String[] actionDetailNames = r.getActionNameList().split("\\|");
+                for (int i = 0; i < actionDetailNames.length; i++) {
+                    Optional.ofNullable(actionDetailMap.get(actionDetailNames[i])).ifPresent(t -> {
+                        ActionDetailBo actionDetailBo = getActionDetailBo(tagMap, paramMap, actionDetailBoList, t);
+                        actionDetailBoList.add(actionDetailBo);
+
+                    });
+                }
+
+            }
+
+            List<ActionDetailBo> elseActionDetailBoList = new ArrayList<>();
+            if (r.getElseActionNameList() != null) {
+                String[] actionDetailNames = r.getElseActionNameList().split("\\|");
+                for (int i = 0; i < actionDetailNames.length; i++) {
+                    Optional.ofNullable(actionDetailMap.get(actionDetailNames[i])).ifPresent(t -> {
+                        ActionDetailBo actionDetailBo = getActionDetailBo(tagMap, paramMap, actionDetailBoList, t);
+                        elseActionDetailBoList.add(actionDetailBo);
+                    });
+                }
+
+            }
+            
             RuleBo ruleBo = new RuleBo();
             ConditionGroupBo conditionGroupBo = initConditionGroupBo(conditionDetailMap, tagMap, paramMap, conditionGroupMap, r.getConditionGroupName());
-            ActionDetailBo actionDetailBo = new ActionDetailBo();
-            actionDetailBo.setActionDetail(actionDetail);
-            Optional.ofNullable(tagMap.get(actionDetail.getTagName()))
-                    .ifPresent(t -> actionDetailBo.setTag(tagMap.get(actionDetail.getTagName())));
-
-            Optional.ofNullable(actionDetail.getTagValue())
-                    .ifPresent(t -> actionDetailBo.setTagRange(paramMap.get(actionDetail.getTagValue())));
-
-
             ruleBo.setConditionGroupBo(conditionGroupBo);
-            ruleBo.setActionDetailBo(actionDetailBo);
-//            ruleBo.setElseActionDetailBo(actionDetailBo);//todo
+            ruleBo.setActionDetailBoList(actionDetailBoList);
+            ruleBo.setElseActionDetailBoList(elseActionDetailBoList);
             ruleBoMap.put(r.getName(), ruleBo);
         });
 
         return ruleBoMap;
+    }
+
+    private ActionDetailBo getActionDetailBo(Map<String, Tag> tagMap, Map<String, TagRange> paramMap, List<ActionDetailBo> actionDetailBoList, ActionDetail t) {
+        ActionDetailBo actionDetailBo = new ActionDetailBo();
+        actionDetailBo.setActionDetail(t);
+        Optional.ofNullable(t.getTagName())
+                .ifPresent(tagName -> {
+                    actionDetailBo.setTag(tagMap.get(tagName));
+                    actionDetailBo.setTagRange(paramMap.get(t.getTagValue()));
+                });
+        actionDetailBoList.add(actionDetailBo);
+        return actionDetailBo;
     }
 
     private ConditionGroupBo initConditionGroupBo(Map<String, ConditionDetail> conditionDetailMap, Map<String, Tag> tagMap, Map<String, TagRange> paramMap, Map<String, ConditionGroup> conditionGroupMap, String conditionGroupName) {

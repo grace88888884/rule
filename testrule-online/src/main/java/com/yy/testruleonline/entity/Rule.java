@@ -58,11 +58,12 @@ public class Rule extends Model<Rule> {
         return conditionGroupName;
     }
 
+    public String getActionNameList() {
+        return actionNameList;
+    }
+
     public void setConditionGroupName(String conditionGroupName) {
         this.conditionGroupName = conditionGroupName;
-    }
-    public String getActionName() {
-        return actionNameList;
     }
 
     public void setActionNameList(String actionNameList) {
