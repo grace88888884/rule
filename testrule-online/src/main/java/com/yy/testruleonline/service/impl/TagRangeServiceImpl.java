@@ -1,8 +1,8 @@
 package com.yy.testruleonline.service.impl;
 
-import com.yy.testruleonline.entity.Tag;
-import com.yy.testruleonline.entity.TagRange;
-import com.yy.testruleonline.mapper.TagRangeMapper;
+import com.yy.testruleonline.entity.TReTag;
+import com.yy.testruleonline.entity.TReTagRng;
+import com.yy.testruleonline.mapper.TReTagRngMapper;
 import com.yy.testruleonline.service.ITagRangeService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.yy.testruleonline.service.ITagService;
@@ -21,18 +21,18 @@ import java.util.List;
  * @since 2019-04-18
  */
 @Service
-public class TagRangeServiceImpl extends ServiceImpl<TagRangeMapper, TagRange> implements ITagRangeService {
+public class TagRangeServiceImpl extends ServiceImpl<TReTagRngMapper, TReTagRng> implements ITagRangeService {
     @Autowired
     ITagService tagService;
 
     @Transactional
     @Override
-    public boolean addTag(Tag tag, List<TagRange> tagRanges) {
-        tagService.insert(tag);
-        for(TagRange tagRange :tagRanges){
-            tagRange.setTagName(tag.getName());
+    public boolean addTag(TReTag TReTag, List<TReTagRng> TReTagRngs) {
+        tagService.insert(TReTag);
+        for(TReTagRng TReTagRng : TReTagRngs){
+            TReTagRng.setTagName(TReTag.getTagName());
         }
-        insertBatch(tagRanges);
+        insertBatch(TReTagRngs);
         return false;
     }
 }

@@ -1,6 +1,6 @@
 package com.yy.testruleonline.mapper;
 
-import com.yy.testruleonline.entity.Rule;
+import com.yy.testruleonline.entity.TReRule;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,21 +17,21 @@ import java.util.List;
  * @since 2019-04-17
  */
 @Mapper
-public interface RuleMapper extends BaseMapper<Rule> {
-//    @Select("select * from rule where condition_group_name in")
+public interface TReRuleMapper extends BaseMapper<TReRule> {
+//    @Select("select * from rule where cond_grp_name in")
 
 
     @Select("<script>" +
             "select\n" +
             " *\n" +
             "from\n" +
-            " rule \n" +
+            " t_re_rule \n" +
             "where\n" +
-            "condition_group_name in" +
-            "<foreach collection='conditionGroupNames' item='item' open='(' separator=',' close=')'>" +
+            "cond_grp_name in" +
+            "<foreach collection='condGrpNames' item='item' open='(' separator=',' close=')'>" +
             "#{item} "+
             "</foreach>" +
             "</script>")
-    List<Rule> getRuleByconditionGroupNames(@Param("conditionGroupNames") List<String> conditionGroupNames);
+    List<TReRule> getRuleByconditionGroupNames(@Param("condGrpNames") List<String> condGrpNames);
     
 }

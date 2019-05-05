@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.testruleonline.mapper.TReCondGrpMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yy.testruleonline.entity.condGrp">
+        <id column="id" property="id" />
+        <result column="cond_grp_name" property="condGrpName" />
+        <result column="cond_grp_desc" property="condGrpDesc" />
+        <result column="cond_relt" property="condRelt" />
+        <result column="cond__name_list" property="condNameList" />
+        <result column="child_cond_grp_name_list" property="childCondGrpNameList" />
+        <result column="actn_name_list" property="actnNameList" />
+        <result column="else_actn_name_list" property="elseActnNameList" />
+    </resultMap>
+
+</mapper>

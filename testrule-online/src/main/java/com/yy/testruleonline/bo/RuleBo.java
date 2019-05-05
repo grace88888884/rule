@@ -4,32 +4,32 @@ package com.yy.testruleonline.bo;
 import java.util.List;
 
 public class RuleBo {
-    private List<ActionDetailBo> actionDetailBoList;
-    private List<ActionDetailBo> elseActionDetailBoList;
-    private ConditionGroupBo conditionGroupBo;
+    private List<ActnBo> actnBoList;
+    private List<ActnBo> elseActnBoList;
+    private CondGrpBo condGrpBo;
 
-    public List<ActionDetailBo> getActionDetailBoList() {
-        return actionDetailBoList;
+    public List<ActnBo> getActnBoList() {
+        return actnBoList;
     }
 
-    public void setActionDetailBoList(List<ActionDetailBo> actionDetailBoList) {
-        this.actionDetailBoList = actionDetailBoList;
+    public void setActnBoList(List<ActnBo> actnBoList) {
+        this.actnBoList = actnBoList;
     }
 
-    public List<ActionDetailBo> getElseActionDetailBoList() {
-        return elseActionDetailBoList;
+    public List<ActnBo> getElseActnBoList() {
+        return elseActnBoList;
     }
 
-    public void setElseActionDetailBoList(List<ActionDetailBo> elseActionDetailBoList) {
-        this.elseActionDetailBoList = elseActionDetailBoList;
+    public void setElseActnBoList(List<ActnBo> elseActnBoList) {
+        this.elseActnBoList = elseActnBoList;
     }
 
-    public ConditionGroupBo getConditionGroupBo() {
-        return conditionGroupBo;
+    public CondGrpBo getCondGrpBo() {
+        return condGrpBo;
     }
 
-    public void setConditionGroupBo(ConditionGroupBo conditionGroupBo) {
-        this.conditionGroupBo = conditionGroupBo;
+    public void setCondGrpBo(CondGrpBo condGrpBo) {
+        this.condGrpBo = condGrpBo;
     }
 
     

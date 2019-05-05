@@ -1,6 +1,6 @@
 package com.yy.testruleonline.service;
 
-import com.yy.testruleonline.entity.Tag;
+import com.yy.testruleonline.entity.TReTag;
 import com.baomidou.mybatisplus.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.service.IService;
  * @author yy
  * @since 2019-04-18
  */
-public interface ITagService extends IService<Tag> {
+public interface ITagService extends IService<TReTag> {
 
 }

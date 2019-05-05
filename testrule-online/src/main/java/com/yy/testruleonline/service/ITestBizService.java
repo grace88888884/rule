@@ -1,8 +1,5 @@
 package com.yy.testruleonline.service;
 
-import com.baomidou.mybatisplus.service.IService;
-import com.yy.testruleonline.entity.Rule;
-
 /**
  * <p>
  *  服务类

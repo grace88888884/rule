@@ -1,14 +1,12 @@
 package com.yy.testruleonline.mapper;
 
-import com.yy.testruleonline.entity.ConditionDetail;
-import com.yy.testruleonline.entity.TagRange;
+import com.yy.testruleonline.entity.TReTagRng;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
  * <p>
@@ -18,18 +16,18 @@ import java.util.Set;
  * @author yy
  * @since 2019-04-18
  */
-public interface TagRangeMapper extends BaseMapper<TagRange> {
+public interface TReTagRngMapper extends BaseMapper<TReTagRng> {
     @Select("<script>" +
             "select\n" +
             " *\n" +
             "from\n" +
-            " tag_range \n" +
+            " t_re_tag_rng \n" +
             "where\n" +
-            "name in" +
+            "tag_rng_name in" +
             "<foreach collection='tagRanges' item='item' open='(' separator=',' close=')'>" +
             "#{item} "+
             "</foreach>" +
             "</script>")
-    List<TagRange> selectByTagRanges(@Param("tagRanges") Collection<String> tagRanges);
+    List<TReTagRng> selectByTagRanges(@Param("tagRanges") Collection<String> tagRanges);
 
 }

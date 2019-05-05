@@ -1,8 +1,7 @@
 package com.yy.testruleonline.mapper;
 
-import com.yy.testruleonline.entity.ConditionDetail;
+import com.yy.testruleonline.entity.TReCond;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.yy.testruleonline.entity.ConditionGroup;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -17,18 +16,18 @@ import java.util.Set;
  * @author yy
  * @since 2019-04-17
  */
-public interface ConditionDetailMapper extends BaseMapper<ConditionDetail> {
+public interface TReCondMapper extends BaseMapper<TReCond> {
     @Select("<script>" +
             "select\n" +
             " *\n" +
             "from\n" +
-            " condition_detail \n" +
+            " t_re_cond \n" +
             "where\n" +
-            "name in" +
-            "<foreach collection='conditionDetailNames' item='item' open='(' separator=',' close=')'>" +
+            "cond_name in" +
+            "<foreach collection='condNames' item='item' open='(' separator=',' close=')'>" +
             "#{item} "+
             "</foreach>" +
             "</script>")
-    List<ConditionDetail> selectByConditionGroupNames(@Param("conditionDetailNames") Set<String> conditionDetailNames);
+    List<TReCond> selectByConditionGroupNames(@Param("condNames") Set<String> condNames);
 
 }

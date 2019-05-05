@@ -1,6 +1,6 @@
 package com.yy.testruleonline.service;
 
-import com.yy.testruleonline.entity.ConditionDetail;
+import com.yy.testruleonline.entity.TReCond;
 import com.baomidou.mybatisplus.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.service.IService;
  * @author yy
  * @since 2019-04-17
  */
-public interface IConditionDetailService extends IService<ConditionDetail> {
+public interface IConditionDetailService extends IService<TReCond> {
 
 }

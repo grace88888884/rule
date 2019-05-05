@@ -1,11 +1,11 @@
 package com.yy.testruleonline.mapper;
 
-import com.yy.testruleonline.entity.Rule;
-import com.yy.testruleonline.entity.Tag;
+import com.yy.testruleonline.entity.TReActn;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -14,21 +14,20 @@ import java.util.List;
  * </p>
  *
  * @author yy
- * @since 2019-04-18
+ * @since 2019-04-17
  */
-public interface TagMapper extends BaseMapper<Tag> {
-
+public interface TReActnMapper extends BaseMapper<TReActn> {
     @Select("<script>" +
             "select\n" +
             " *\n" +
             "from\n" +
-            " tag \n" +
+            " t_re_actn \n" +
             "where\n" +
-            "name in" +
-            "<foreach collection='tagNames' item='item' open='(' separator=',' close=')'>" +
+            "actn_name in" +
+            "<foreach collection='actionNames' item='item' open='(' separator=',' close=')'>" +
             "#{item} "+
             "</foreach>" +
             "</script>")
-    List<Tag> selectByTagNames(@Param("tagNames") List<String> tagNames);
+    List<TReActn> selectByActionDetailNames(@Param("actionNames") Collection<String> actionNames);
 
 }

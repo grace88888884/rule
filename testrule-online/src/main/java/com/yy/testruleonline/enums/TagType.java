@@ -8,6 +8,7 @@ import java.io.Serializable;
 public enum TagType implements IEnum {
     ENUM("E", "枚举"),
     STRING("S", "字符"),
+    FUCTION("F", "函数"),
     NUM("N", "数值型");
     private String code;
     private String desc;

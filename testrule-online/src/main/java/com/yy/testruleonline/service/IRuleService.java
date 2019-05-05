@@ -1,6 +1,6 @@
 package com.yy.testruleonline.service;
 
-import com.yy.testruleonline.entity.Rule;
+import com.yy.testruleonline.entity.TReRule;
 import com.baomidou.mybatisplus.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.service.IService;
  * @author Mht
  * @since 2019-04-17
  */
-public interface IRuleService extends IService<Rule> {
+public interface IRuleService extends IService<TReRule> {
 
 }

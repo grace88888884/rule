@@ -1,6 +1,6 @@
 package com.yy.testruleonline.service;
 
-import com.yy.testruleonline.entity.ActionDetail;
+import com.yy.testruleonline.entity.TReActn;
 import com.baomidou.mybatisplus.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.service.IService;
  * @author yy
  * @since 2019-04-17
  */
-public interface IActionDetailService extends IService<ActionDetail> {
+public interface IActionDetailService extends IService<TReActn> {
 
 }

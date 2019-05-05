@@ -15,20 +15,31 @@ import java.io.Serializable;
  * @author yy
  * @since 2019-04-18
  */
-@TableName("tag_range")
-public class TagRange extends Model<TagRange> {
+@TableName("t_re_tag_rng")
+public class TReTagRng extends Model<TReTagRng> {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
-
-    private String name;
-
-    private String desc;
+    @TableField("tag_rng_name")
+    private String tagRngName;
+    @TableField("tag_rng_desc")
+    private String tagRngDesc;
 
     @TableField("tag_name")
     private String tagName;
+
+    @TableField("tag_value")
+    private String tagValue;
+
+    public String getTagValue() {
+        return tagValue;
+    }
+
+    public void setTagValue(String tagValue) {
+        this.tagValue = tagValue;
+    }
 
     public Integer getId() {
         return id;
@@ -37,19 +48,19 @@ public class TagRange extends Model<TagRange> {
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getName() {
-        return name;
+    public String getTagRngName() {
+        return tagRngName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTagRngName(String tagRngName) {
+        this.tagRngName = tagRngName;
     }
-    public String getDesc() {
-        return desc;
+    public String getTagRngDesc() {
+        return tagRngDesc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setTagRngDesc(String tagRngDesc) {
+        this.tagRngDesc = tagRngDesc;
     }
     public String getTagName() {
         return tagName;
@@ -68,8 +79,8 @@ public class TagRange extends Model<TagRange> {
     public String toString() {
         return "TagRange{" +
         "id=" + id +
-        ", name=" + name +
-        ", desc=" + desc +
+        ", tagRngName=" + tagRngName +
+        ", tagRngDesc=" + tagRngDesc +
         ", tagName=" + tagName +
         "}";
     }

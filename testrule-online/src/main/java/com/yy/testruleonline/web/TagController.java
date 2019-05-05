@@ -1,8 +1,8 @@
 package com.yy.testruleonline.web;
 
 
-import com.yy.testruleonline.entity.Tag;
-import com.yy.testruleonline.entity.TagRange;
+import com.yy.testruleonline.entity.TReTag;
+import com.yy.testruleonline.entity.TReTagRng;
 import com.yy.testruleonline.enums.TagType;
 import com.yy.testruleonline.service.ITagRangeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,27 +30,27 @@ public class TagController {
 
     @ResponseBody
     @RequestMapping("/add")
-    public void addParamClassify(Tag tag, List<TagRange> params) {
-        tagRangeService.addTag(tag, params);
+    public void addParamClassify(TReTag TReTag, List<TReTagRng> params) {
+        tagRangeService.addTag(TReTag, params);
 
     }
 
     @ResponseBody
     @RequestMapping("/addTest")
     public boolean addParamClassifyTest(String key) {
-        Tag tag = new Tag();
-        tag.setName(key + "MerType");
-        tag.setDesc(key + "商户分类");
-        tag.setType(TagType.ENUM);
+        TReTag TReTag = new TReTag();
+        TReTag.setTagName(key + "MerType");
+        TReTag.setTagDesc(key + "商户分类");
+        TReTag.setTagType(TagType.ENUM);
 
-        List<TagRange> tagRanges = new ArrayList<>();
+        List<TReTagRng> TReTagRngs = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            TagRange param = new TagRange();
-            param.setName(key + "mer" + i);
-            param.setDesc(key + "商户" + i);
-            tagRanges.add(param);
+            TReTagRng param = new TReTagRng();
+            param.setTagRngName(key + "mer" + i);
+            param.setTagRngDesc(key + "商户" + i);
+            TReTagRngs.add(param);
         }
-        tagRangeService.addTag(tag, tagRanges);
+        tagRangeService.addTag(TReTag, TReTagRngs);
         return false;
     }
 

@@ -18,28 +18,39 @@ import java.math.BigDecimal;
  * @author yy
  * @since 2019-04-17
  */
-@TableName("condition_detail")
-public class ConditionDetail extends Model<ConditionDetail> {
+@TableName("t_re_cond")
+public class TReCond extends Model<TReCond> {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
-
-    private String name;
-
-    private String desc;
+    @TableField("cond_name")
+    private String condName;
+    @TableField("cond_desc")
+    private String condDesc;
 
     @TableField("tag_name")
     private String tagName;
 
     private OperationType operation;
 
-    @TableField("threshold_value")
-    private BigDecimal thresholdValue;
+    @TableField("thr_value")
+    private BigDecimal thrValue;
 
-    @TableField("tag_value")
-    private String tagValue;
+    @TableField("tag_rng_name")
+    private String tagRngName;
+
+    @TableField("fun_name")
+    private String funName;
+
+    public String getFunName() {
+        return funName;
+    }
+
+    public void setFunName(String funName) {
+        this.funName = funName;
+    }
 
     public Integer getId() {
         return id;
@@ -48,19 +59,19 @@ public class ConditionDetail extends Model<ConditionDetail> {
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getName() {
-        return name;
+    public String getCondName() {
+        return condName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCondName(String condName) {
+        this.condName = condName;
     }
-    public String getDesc() {
-        return desc;
+    public String getCondDesc() {
+        return condDesc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setCondDesc(String condDesc) {
+        this.condDesc = condDesc;
     }
     public String getTagName() {
         return tagName;
@@ -76,19 +87,19 @@ public class ConditionDetail extends Model<ConditionDetail> {
     public void setOperation(OperationType operation) {
         this.operation = operation;
     }
-    public BigDecimal getThresholdValue() {
-        return thresholdValue;
+    public BigDecimal getThrValue() {
+        return thrValue;
     }
 
-    public void setThresholdValue(BigDecimal thresholdValue) {
-        this.thresholdValue = thresholdValue;
+    public void setThrValue(BigDecimal thrValue) {
+        this.thrValue = thrValue;
     }
-    public String getTagValue() {
-        return tagValue;
+    public String getTagRngName() {
+        return tagRngName;
     }
 
-    public void setTagValue(String tagValue) {
-        this.tagValue = tagValue;
+    public void setTagRngName(String tagRngName) {
+        this.tagRngName = tagRngName;
     }
 
     @Override
@@ -100,12 +111,12 @@ public class ConditionDetail extends Model<ConditionDetail> {
     public String toString() {
         return "ConditionDetail{" +
         "id=" + id +
-        ", name=" + name +
-        ", desc=" + desc +
+        ", cond_name=" + condName +
+        ", cond_desc=" + condDesc +
         ", tagName=" + tagName +
         ", operation=" + operation +
-        ", thresholdValue=" + thresholdValue +
-        ", tagValue=" + tagValue +
+        ", thrValue=" + thrValue +
+        ", tagRngName=" + tagRngName +
         "}";
     }
 }

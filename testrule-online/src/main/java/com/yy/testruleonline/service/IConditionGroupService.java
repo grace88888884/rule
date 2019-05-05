@@ -1,6 +1,6 @@
 package com.yy.testruleonline.service;
 
-import com.yy.testruleonline.entity.ConditionGroup;
+import com.yy.testruleonline.entity.TReCondGrp;
 import com.baomidou.mybatisplus.service.IService;
 
 /**
@@ -11,7 +11,7 @@ import com.baomidou.mybatisplus.service.IService;
  * @author Mht
  * @since 2019-04-17
  */
-public interface IConditionGroupService extends IService<ConditionGroup> {
+public interface IConditionGroupService extends IService<TReCondGrp> {
     
 
 }
