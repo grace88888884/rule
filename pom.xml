@@ -14,5 +14,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>testrule-online</module>
+        <module>testrule-demo</module>
     </modules>
 </project>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.testruleonline.mapper.TReFunMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" tagType="com.yy.testruleonline.entity.TReFun">
+        <result column="id" property="id" />
+        <result column="fun_name" property="funName" />
+        <result column="input_param_name_list" property="inputParamNameList" />
+        <result column="output_name" property="outputName" />
+        <result column="tag_name" property="tagName" />
+    </resultMap>
+
+</mapper>
