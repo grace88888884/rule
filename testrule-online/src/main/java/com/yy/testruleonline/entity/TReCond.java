@@ -33,6 +33,9 @@ public class TReCond extends Model<TReCond> {
     @TableField("tag_name")
     private String tagName;
 
+    @TableField("result_tag_name")
+    private String resultTagName;
+
     private OperationType operation;
 
     @TableField("thr_value")
@@ -41,15 +44,12 @@ public class TReCond extends Model<TReCond> {
     @TableField("tag_rng_name")
     private String tagRngName;
 
-    @TableField("fun_name")
-    private String funName;
-
-    public String getFunName() {
-        return funName;
+    public String getResultTagName() {
+        return resultTagName;
     }
 
-    public void setFunName(String funName) {
-        this.funName = funName;
+    public void setResultTagName(String resultTagName) {
+        this.resultTagName = resultTagName;
     }
 
     public Integer getId() {

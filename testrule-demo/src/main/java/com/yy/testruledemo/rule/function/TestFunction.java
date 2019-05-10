@@ -1,8 +1,9 @@
-package com.yy.testruleonline.function;
+package com.yy.testruledemo.rule.function;
 
 import com.googlecode.aviator.runtime.type.AviatorBoolean;
 import com.googlecode.aviator.runtime.type.AviatorObject;
-import com.yy.testruleonline.enums.FunctionType;
+import com.yy.testruledemo.rule.enums.SelfDefineFunctionType;
+import com.yy.testruleonline.function.AbstractRuleFunction;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -18,7 +19,7 @@ public class TestFunction extends AbstractRuleFunction {
     }
 
     @Override
-    public FunctionType getFuctionType() {
-        return FunctionType.TEST;
+    public String getFuctionType() {
+        return SelfDefineFunctionType.DAYAMOUNTLMT1;
     }
 }

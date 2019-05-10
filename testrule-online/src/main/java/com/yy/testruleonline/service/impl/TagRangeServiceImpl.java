@@ -23,7 +23,7 @@ import java.util.List;
 @Service
 public class TagRangeServiceImpl extends ServiceImpl<TReTagRngMapper, TReTagRng> implements ITagRangeService {
     @Autowired
-    ITagService tagService;
+    TagServiceImpl tagService;
 
     @Transactional
     @Override

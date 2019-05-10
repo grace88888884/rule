@@ -32,6 +32,17 @@ public class TReTag extends Model<TReTag> {
     @TableField("tag_type")
     private TagType tagType;
 
+    @TableField("fun_name")
+    private String funName;
+
+    public String getFunName() {
+        return funName;
+    }
+
+    public void setFunName(String funName) {
+        this.funName = funName;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -27,15 +27,15 @@ public class CondGrpRelationFunction extends AbstractRuleFunction {
         List<CondGrpBo> condGrpBoList = parentCondGrpBo.getCondGrpBoList();
         List<CondBo> condBoList = parentCondGrpBo.getCondBoList();
 
-        Map<String, Object> tagRanges = new HashMap<>();
-        tagRanges.put(conditionInput, input);
+        Map<String, Object> param = new HashMap<>();
+        param.put(conditionInput, input);
         for (int i = 0; i < condBoList.size(); i++) {
             if(parentExpressionBuilder.length()>0){
                 parentExpressionBuilder.append(parentCondGrpBo.getCondGrp().getCondRelt().getCode());
             }
             CondBo condBo = condBoList.get(i);
             parentExpressionBuilder.append(conditionOperationEquation).append("('").append(Constants.conditionDetailBo).append(i).append("')");
-            tagRanges.put(Constants.conditionDetailBo + i, condBo);
+            param.put(Constants.conditionDetailBo + i, condBo);
         }
 
         for (int i = 0; i < condGrpBoList.size(); i++) {
@@ -44,17 +44,17 @@ public class CondGrpRelationFunction extends AbstractRuleFunction {
             }
             CondGrpBo childCondGrpBo = condGrpBoList.get(i);
             parentExpressionBuilder.append(conditionGroupEquation).append("('").append(Constants.conditionGroupBo).append(i).append("')");
-            tagRanges.put(Constants.conditionGroupBo + i, childCondGrpBo);
+            param.put(Constants.conditionGroupBo + i, childCondGrpBo);
         }
 
-        Boolean result = (Boolean)AviatorEvaluator.execute(parentExpressionBuilder.toString(), tagRanges);
+        Boolean result = (Boolean)AviatorEvaluator.execute(parentExpressionBuilder.toString(), param);
         return result?AviatorBoolean.TRUE:AviatorBoolean.FALSE;
     }
 
 
 
     @Override
-    public FunctionType getFuctionType() {
-        return CONDITION_GROUP_RELATION;
+    public String getFuctionType() {
+        return FunctionType.CONDITION_GROUP_RELATION;
     }
 }

@@ -1,14 +1,13 @@
-package com.yy.testruleonline.web;
+package com.yy.testruledemo.controller;
 
 
 import com.yy.testruleonline.entity.TReTag;
 import com.yy.testruleonline.entity.TReTagRng;
 import com.yy.testruleonline.enums.TagType;
-import com.yy.testruleonline.service.ITagRangeService;
+import com.yy.testruleonline.service.impl.TagRangeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ import java.util.List;
 @RequestMapping("/tag")
 public class TagController {
     @Autowired
-    ITagRangeService tagRangeService;
+    TagRangeServiceImpl tagRangeService;
 
     @ResponseBody
     @RequestMapping("/add")

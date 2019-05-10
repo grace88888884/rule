@@ -16,6 +16,13 @@ public class Constants {
 
    public static class resultMap {
       public final static String ruleRunActionResultStr = "ruleRunActionResult";
+      public final static String resultMap = "resultMap";
+
+   }
+   
+   public static class envMap {
+      public final static String context = "context";
+
    }
    
    

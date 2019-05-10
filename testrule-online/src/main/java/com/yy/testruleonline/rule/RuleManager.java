@@ -1,15 +1,14 @@
 package com.yy.testruleonline.rule;
 
 import com.googlecode.aviator.AviatorEvaluator;
-import com.yy.testruleonline.bo.ActnBo;
-import com.yy.testruleonline.bo.CondBo;
-import com.yy.testruleonline.bo.CondGrpBo;
-import com.yy.testruleonline.bo.RuleBo;
+import com.yy.testruleonline.bo.*;
 import com.yy.testruleonline.entity.*;
 import com.yy.testruleonline.enums.RuleRunResult;
+import com.yy.testruleonline.enums.TagType;
 import com.yy.testruleonline.mapper.*;
-import com.yy.testruleonline.service.IRuleService;
+import com.yy.testruleonline.service.impl.RuleServiceImpl;
 import com.yy.testruleonline.utils.Constants;
+import com.yy.testruleonline.utils.RuleHashMap;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,21 +17,19 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.yy.testruleonline.utils.Constants.conditionGroupEquation;
-import static com.yy.testruleonline.utils.Constants.conditionInput;
 
 @Component
 public class RuleManager {
-  
     
     @Autowired
     public TReCondGrpMapper condGrpMapper;
     
     @Autowired
     public TReCondMapper condMapper;
-//    @Autowired
-//    public IConditionDetailService conditionDetailService;
     @Autowired
-    public IRuleService ruleService;
+    public TReFunMapper funMapper;
+    @Autowired
+    public RuleServiceImpl ruleService;
     
     @Autowired
     public TReActnMapper actnMapper;
@@ -43,15 +40,14 @@ public class RuleManager {
     public TReTagMapper tagMapper;
 
 
-    public Map<String, Object> executeRule(Map<String, String> param) {
-        final Map<String, Object> resultMap = new HashMap<>();
-        String ruleName = param.get("ruleName");
+    public Map<String, Object> executeRule(Map<String, String> param, String ruleName) {
+        final RuleHashMap<String> resultMap = new RuleHashMap<>();
         RuleBo ruleBo = getRuleBoList().get(ruleName);
         if(ruleBo==null){
             resultMap.put(Constants.resultMap.ruleRunActionResultStr,RuleRunResult.RUN_NOTHINT);
             return resultMap;
         }
-        boolean isSatisfied = executeCondition(param, ruleBo);
+        boolean isSatisfied = executeCondition(param, ruleBo, resultMap);
         if (isSatisfied && ruleBo.getActnBoList() != null && ruleBo.getActnBoList().size() > 0) {
             ruleBo.getActnBoList().forEach(t -> {
                 Map<String, Object> actionResultMap = runAction(t);
@@ -75,6 +71,11 @@ public class RuleManager {
         return resultMap;
     }
 
+    public Map<String, Object> executeRule(Map<String, String> param) {
+        String ruleName = param.get("ruleName");
+        return executeRule(param, ruleName);
+    }
+
     private Map<String, Object> runAction(ActnBo actnBo) {
         Map<String, Object> resultMap = new HashMap<>();
         TReActn TReActn = actnBo.getActn();
@@ -93,13 +94,14 @@ public class RuleManager {
         return resultMap;
     }
 
-    private boolean executeCondition(Map<String, String> param, RuleBo ruleBo) {
+    private boolean executeCondition(Map<String, String> param, RuleBo ruleBo, RuleHashMap<String> resultMap) {
         CondGrpBo condGrpBo = ruleBo.getCondGrpBo();
         StringBuilder stringBuilder = new StringBuilder().append(conditionGroupEquation).append("('").append(Constants.conditionGroupBo).append("')");
-        Map<String, Object> tagRanges = new HashMap<>();
-        tagRanges.put(Constants.conditionGroupBo, condGrpBo);
-        tagRanges.put(conditionInput, param);
-        boolean isSatisfied = (boolean) AviatorEvaluator.execute(stringBuilder.toString(), tagRanges);
+        Map<String, Object> env = new HashMap<>();
+        env.put(Constants.conditionGroupBo, condGrpBo);
+        env.put(Constants.conditionInput, param);
+        env.put(Constants.resultMap.resultMap, resultMap);
+        boolean isSatisfied = (boolean) AviatorEvaluator.execute(stringBuilder.toString(), env);
         System.out.println("isSatisfiedCondition:" + isSatisfied + "\n");
         return isSatisfied;
     }
@@ -185,14 +187,14 @@ public class RuleManager {
 
         conditionGroups.forEach(t -> {
             String conditionDetailNameListStr = t.getCondNameList();
-            Set<String> conditionDetailNameSet = new HashSet<>();
+            Set<String> conditionNameSet = new HashSet<>();
             if (Strings.isNotEmpty(conditionDetailNameListStr)) {
                 String[] condNames = conditionDetailNameListStr.split("\\|");
                 for (int i = 0; i < condNames.length; i++) {
-                        conditionDetailNameSet.add(condNames[i]);
+                    conditionNameSet.add(condNames[i]);
                     conditionNameAllSet.add(condNames[i]);
                 }
-                t.setCondNameSet(conditionDetailNameSet);
+                t.setCondNameSet(conditionNameSet);
                 Set<String> childConditionGroupNameSet = new HashSet<>();
                 String childConditionGroupNameList = t.getChildCondGrpNameList();
                 if (Strings.isNotEmpty(childConditionGroupNameList)) {
@@ -208,6 +210,8 @@ public class RuleManager {
         if(conditionNameAllSet.size()>0) {
              conditions = condMapper.selectByConditionGroupNames(conditionNameAllSet);
         }
+
+
         Map<String, TReCond> conditionMap = conditions.stream().collect(Collectors.toMap(TReCond::getCondName, t -> t));
         List<TReActn> actions = new ArrayList<>();
         if(conditionNameAllSet.size()>0) {
@@ -216,7 +220,9 @@ public class RuleManager {
             Map<String, TReActn> actionMap = actions.stream().collect(Collectors.toMap(TReActn::getActnName, t -> t));
 
         List<String> tagNameList = conditions.stream().map(g -> g.getTagName()).collect(Collectors.toList());
+        List<String> tagNameList1 = conditions.stream().filter(g ->g.getResultTagName()!=null).map(g -> g.getResultTagName()).collect(Collectors.toList());
         List<String> tagNameList2 = actions.stream().map(g -> g.getTagName()).collect(Collectors.toList());
+        tagNameList.addAll(tagNameList1);
         tagNameList.addAll(tagNameList2);
         List<TReTag> tags = new ArrayList<>();
         if(tagNameList.size()>0) {
@@ -224,13 +230,19 @@ public class RuleManager {
         }
         Map<String, TReTag> tagMap = tags.stream().collect(Collectors.toMap(TReTag::getTagName, t -> t));
 
+        List<String> funNameList = tags.stream().filter(item -> item.getFunName() != null).map(TReTag::getFunName).collect(Collectors.toList());
+        List<TReFun> funList = new ArrayList<>();
+        if (funNameList.size() > 0) {
+            funList = funMapper.selectByFunNames(funNameList);
+        }
+        Map<String, TReFun> funMap = funList.stream().collect(Collectors.toMap(TReFun::getFunName, t -> t));
 
-        List<String> tagValueList = conditions.stream().map(g -> g.getTagRngName()).collect(Collectors.toList());
-        List<String> tagValueList2 = actions.stream().map(g -> g.getTagRngName()).collect(Collectors.toList());
-        tagValueList.addAll(tagValueList2);
+        List<String> tagRangeList = conditions.stream().map(g -> g.getTagRngName()).collect(Collectors.toList());
+        List<String> tagRangeList2 = actions.stream().map(g -> g.getTagRngName()).collect(Collectors.toList());
+        tagRangeList.addAll(tagRangeList2);
         List<TReTagRng> tagRanges = new ArrayList<>();
-        if(tagValueList.size()>0) {
-            tagRanges = tagRngMapper.selectByTagRanges(tagValueList);
+        if (tagRangeList.size() > 0) {
+            tagRanges = tagRngMapper.selectByTagRanges(tagRangeList);
         }
         Map<String, TReTagRng> tagRangeMap = tagRanges.stream().collect(Collectors.toMap(TReTagRng::getTagRngName, t -> t));
 
@@ -247,7 +259,6 @@ public class RuleManager {
 
                     });
                 }
-
             }
 
             List<ActnBo> elseActnBoList = new ArrayList<>();
@@ -259,11 +270,10 @@ public class RuleManager {
                         elseActnBoList.add(actnBo);
                     });
                 }
-
             }
             
             RuleBo ruleBo = new RuleBo();
-            CondGrpBo condGrpBo = initConditionGroupBo(conditionMap, tagMap, tagRangeMap, conditionGroupMap, actionMap,r.getCondGrpName());
+            CondGrpBo condGrpBo = initConditionGroupBo(conditionMap, tagMap, tagRangeMap, conditionGroupMap, actionMap, funMap, r.getCondGrpName());
             ruleBo.setCondGrpBo(condGrpBo);
             ruleBo.setActnBoList(actnBoList);
             ruleBo.setElseActnBoList(elseActnBoList);
@@ -284,27 +294,31 @@ public class RuleManager {
         return actnBo;
     }
 
-    private CondGrpBo initConditionGroupBo(Map<String, TReCond> conditionDetailMap, Map<String, TReTag> tagMap, Map<String, TReTagRng> paramMap, Map<String, TReCondGrp> conditionGroupMap, Map<String, TReActn> actionDetailMap, String conditionGroupName) {
+    private CondGrpBo initConditionGroupBo(Map<String, TReCond> conditionDetailMap, Map<String, TReTag> tagMap, Map<String, TReTagRng> paramMap, Map<String, TReCondGrp> conditionGroupMap, Map<String, TReActn> actionDetailMap, Map<String, TReFun> funMap, String conditionGroupName) {
         TReCondGrp conditionGroup = conditionGroupMap.get(conditionGroupName);
         CondGrpBo condGrpBo = new CondGrpBo();
         if(conditionGroup!=null) {
             condGrpBo.setCondGrp(conditionGroup);
             conditionGroup.getCondNameSet().forEach(t -> {
-                TReCond TReCond = conditionDetailMap.get(t);
-                TReTag TReTag = tagMap.get(TReCond.getTagName());
+                TReCond condition = conditionDetailMap.get(t);
+                TReTag TReTag = tagMap.get(condition.getTagName());
                 CondBo condBo = new CondBo();
                 condBo.setTag(TReTag);
-                if (TReCond.getTagRngName() != null) {
-                    TReTagRng TReTagRng = paramMap.get(TReCond.getTagRngName());
+                if (condition.getTagRngName() != null) {
+                    TReTagRng TReTagRng = paramMap.get(condition.getTagRngName());
                     condBo.setTagRng(TReTagRng);
                 }
-                condBo.setCond(TReCond);
+              
+                condBo.setTagBo(initTagBo(condition.getTagName(),tagMap ,funMap));
+                condBo.setResultTagBo(initTagBo(condition.getResultTagName(),tagMap ,funMap));
+
+                condBo.setCond(condition);
                 condGrpBo.getCondBoList().add(condBo);
 
             });
             if (conditionGroup.getChildCondGrpNameSet() != null) {
                 conditionGroup.getChildCondGrpNameSet().forEach(t -> {
-                    CondGrpBo childCondtionGroupBo = initConditionGroupBo(conditionDetailMap, tagMap, paramMap, conditionGroupMap, actionDetailMap, t);
+                    CondGrpBo childCondtionGroupBo = initConditionGroupBo(conditionDetailMap, tagMap, paramMap, conditionGroupMap, actionDetailMap, funMap, t);
                     condGrpBo.getCondGrpBoList().add(childCondtionGroupBo);
                 });
             }
@@ -332,6 +346,21 @@ public class RuleManager {
         }
         
         return condGrpBo;
+    }
+
+    private TagBo initTagBo(String tagName, Map<String,TReTag> tagMap,Map<String, TReFun> funMap) {
+        TReTag tag = tagMap.get(tagName);
+        if(tag==null){
+            return null;
+        }
+        TagBo tagBo = new TagBo();
+        tagBo.setTag(tag);
+        TagType tagType = tag.getTagType();
+        tagBo.setTagType(tagType);
+        if(TagType.CACULATION.equals(tagType)) {
+            tagBo.setFun(funMap.get(tagBo.getFun()));
+        }
+        return tagBo;
     }
 
 

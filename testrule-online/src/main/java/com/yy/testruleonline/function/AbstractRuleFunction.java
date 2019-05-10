@@ -2,9 +2,11 @@ package com.yy.testruleonline.function;
 
 import com.googlecode.aviator.AviatorEvaluator;
 import com.googlecode.aviator.runtime.function.AbstractFunction;
+import com.googlecode.aviator.runtime.type.AviatorObject;
 import com.yy.testruleonline.enums.FunctionType;
 
 import javax.annotation.PostConstruct;
+import java.util.Map;
 
 public abstract class AbstractRuleFunction extends AbstractFunction {
     
@@ -15,9 +17,9 @@ public abstract class AbstractRuleFunction extends AbstractFunction {
     
     @Override
     public String getName() {
-        return getFuctionType().getCode();
+        return getFuctionType();
     }
 
-    abstract public FunctionType getFuctionType();
+    abstract public String getFuctionType();
 
 }

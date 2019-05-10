@@ -5,16 +5,13 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.io.Serializable;
 
-public enum TagType implements IEnum {
-    ENUM("E", "枚举"),
-    STRING("S", "字符"),
-    FUCTION("F", "函数"),
-    CACULATION("C", "数据库"),
-    NUM("N", "数值型");
+public enum RuleResultType implements IEnum {
+    SEQ("S", "顺序访问"),
+    PARAM("P", "并行验证");
     private String code;
     private String desc;
 
-    TagType(final String code, final String desc) {
+    RuleResultType(final String code, final String desc) {
         this.code = code;
         this.desc = desc;
     }
@@ -29,4 +26,3 @@ public enum TagType implements IEnum {
         return this.desc;
     }
 }
-

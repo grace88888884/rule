@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 public enum ActionType implements IEnum {
     FUCTION("F", "枚举"),
+    DECL_RES("D", "拒绝返回"),
     PARAM("P", "字符");
     private String code;
     private String desc;

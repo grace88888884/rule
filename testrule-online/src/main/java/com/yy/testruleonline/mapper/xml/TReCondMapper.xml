@@ -10,6 +10,7 @@
         <result column="tag_name" property="tagName" />
         <result column="operation" property="operation" />
         <result column="thr_value" property="thrValue" />
+        <result column="result_tag_name" property="resultTagName" />
         <result column="tag_rng_name" property="tagRngName" />
         <result column="fun_name" property="funName" />
     </resultMap>
