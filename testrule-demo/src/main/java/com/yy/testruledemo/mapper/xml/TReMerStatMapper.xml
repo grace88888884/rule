@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yy.testruledemo.mapper.TReMerStatMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yy.testruledemo.entity.TReMerStat">
+        <id column="id" property="id" />
+        <result column="mer_no" property="merNo" />
+        <result column="day_amt_stat" property="dayAmtStat" />
+        <result column="day_cnt_stat" property="dayCntStat" />
+        <result column="mer_desc" property="merDesc" />
+    </resultMap>
+
+</mapper>
