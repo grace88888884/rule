@@ -27,7 +27,7 @@ public class ActionManager<T> {
                 if (actionResultMap != null && actionResultMap.size() > 0) {
                     responseParam.putAll(actionResultMap);
                 }
-                responseParam.put(Constants.resultMap.responseCode, RuleRunResult.RUN_ACTION);
+                responseParam.put(Constants.resultMap.ruleResult, RuleRunResult.RUN_ACTION);
             });
 
             ruleBo.getForceActionList().forEach(t ->
@@ -40,10 +40,10 @@ public class ActionManager<T> {
                 if (actionResultMap != null && actionResultMap.size() > 0) {
                     responseParam.putAll(actionResultMap);
                 }
-                responseParam.put(Constants.resultMap.responseCode, RuleRunResult.RUN_ELSE_ACTION);
+                responseParam.put(Constants.resultMap.ruleResult, RuleRunResult.RUN_ELSE_ACTION);
             });
         } else {
-            responseParam.put(Constants.resultMap.responseCode, RuleRunResult.RUN_NOTHING);
+            responseParam.put(Constants.resultMap.ruleResult, RuleRunResult.RUN_NOTHING);
         }
     }
 

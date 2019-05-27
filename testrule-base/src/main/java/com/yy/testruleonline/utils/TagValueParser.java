@@ -57,12 +57,10 @@ public class TagValueParser {
             for (Field field : fields) {
                 if (field.isAnnotationPresent(RuleTag.class) && tagBo.getRuleTag().tagName().equals(field.getAnnotation(RuleTag.class).tagName())) {
                     field.setAccessible(true);
-                    try {
-                        parseInput = field.get(input);
+
+                    parseInput = field.get(input);
                         tagField = field;
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
+                   
                     break;
                 }
             }
@@ -91,11 +89,8 @@ public class TagValueParser {
 
                         if (funName != null) {
                             parseResult = AviatorEvaluator.execute(funName + "()", env);
-                            try {
                                 tagField.set(input,parseResult);
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            }
+
                         }
                     }
                 default:
@@ -103,7 +98,7 @@ public class TagValueParser {
             }
             return parseResult;
         }catch (Exception e){
-            throw new RuleException(ExceptionType.TAG_PARSER_EXCEPTION);
+            throw new RuleException(ExceptionType.TAG_PARSER_EXCEPTION,tagBo.getTag().getTagName(), e);
         }
         
     }

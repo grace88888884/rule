@@ -4,10 +4,12 @@ import com.yy.testruleonline.enums.ExceptionType;
 
 public class RuleException extends RuntimeException {
     ExceptionType exceptionType;
+    Exception exception;
 
-    public RuleException(ExceptionType exceptionType,String message) {
+    public RuleException(ExceptionType exceptionType,String message,Exception exception) {
         super(exceptionType.getDesc()+","+message);
         this.exceptionType = exceptionType;
+        this.exception = exception;
     }
 
     public ExceptionType getExceptionType() {
@@ -18,8 +20,10 @@ public class RuleException extends RuntimeException {
         this.exceptionType = exceptionType;
     }
 
-    public RuleException( ExceptionType exceptionType) {
+    public RuleException( ExceptionType exceptionType,Exception exception) {
         super(exceptionType.getDesc());
         this.exceptionType = exceptionType;
+        this.exception = exception;
+
     }
 }

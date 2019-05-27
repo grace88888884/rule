@@ -2,17 +2,28 @@ package com.yy.testruleonline.rule.api;
 
 import com.yy.testruleonline.enums.RuleRunResult;
 
+import java.util.List;
+
 public class RuleGeneralResponse<I> {
-    String responseCode;
+    String ruleResult;
+    List<String> ruleException;
     Boolean isSatisfied;
     I result;
 
-    public String getResponseCode() {
-        return responseCode;
+    public List<String> getRuleException() {
+        return ruleException;
     }
 
-    public void setResponseCode(String responseCode) {
-        this.responseCode = responseCode;
+    public void setRuleException(List<String> ruleException) {
+        this.ruleException = ruleException;
+    }
+
+    public String getRuleResult() {
+        return ruleResult;
+    }
+
+    public void setRuleResult(String ruleResult) {
+        this.ruleResult = ruleResult;
     }
 
     public Boolean getSatisfied() {

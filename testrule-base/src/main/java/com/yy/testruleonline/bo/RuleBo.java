@@ -1,6 +1,7 @@
 package com.yy.testruleonline.bo;
 
 
+import com.yy.testruleonline.dao.entity.TReRule;
 import com.yy.testruleonline.rule.function.action.IForceAction;
 
 import java.util.ArrayList;
@@ -11,6 +12,16 @@ public class RuleBo {
     private List<ActnBo> elseActnBoList=new ArrayList<>();
     private CondGrpBo condGrpBo;
     List<IForceAction> forceActionList=new ArrayList<>();
+    private TReRule rule;
+
+    public TReRule getRule() {
+        return rule;
+    }
+
+    public void setRule(TReRule rule) {
+        this.rule = rule;
+    }
+
     public List<ActnBo> getActnBoList() {
         return actnBoList;
     }
@@ -42,6 +53,7 @@ public class RuleBo {
     public void setForceActionList(List<IForceAction> forceActionList) {
         this.forceActionList = forceActionList;
     }
+
 //    public List<TagBo> getInputTagList() {
 //        return inputTagList;
 //    }

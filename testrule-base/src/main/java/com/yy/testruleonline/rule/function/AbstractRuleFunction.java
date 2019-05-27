@@ -5,7 +5,7 @@ import com.googlecode.aviator.runtime.function.AbstractFunction;
 
 import javax.annotation.PostConstruct;
 
-public abstract class AbstractRuleFunction<T> extends AbstractFunction {
+public abstract class AbstractRuleFunction extends AbstractFunction {
     
     @PostConstruct
     public void init(){

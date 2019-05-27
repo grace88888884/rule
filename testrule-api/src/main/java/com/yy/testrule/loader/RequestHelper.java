@@ -36,6 +36,10 @@ public class RequestHelper<A, I, O> {
         });
         String s = JSON.toJSONString(ruleResponse.getResult());
         O o = JSON.parseObject(s, outputConverter.getOutputClass());
+        if(ruleResponse.getRuleException()!=null&&ruleResponse.getRuleException().size()>0){
+            System.out.println(ruleResponse.getRuleException());
+            return false;
+        }
         if (ruleResponse.getResult() != null) {
             outputConverter.convert(o, context);
         }

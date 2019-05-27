@@ -7,7 +7,9 @@ import java.io.Serializable;
 
 public enum  ExceptionType implements IEnum {
     TAG_PARSER_EXCEPTION("标签转换错误"),
-    COND_EXECUTE_EXCEPTION("条件执行错误");
+    COND_EXECUTE_EXCEPTION("条件执行错误"),
+    COND_RELATION_EXECUTE_EXCEPTION("条件组合执行错误"),
+    COND_RULE_EXECUTE_EXCEPTION("规则执行错误");
     private String desc;
 
     

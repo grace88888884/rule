@@ -7,7 +7,7 @@ import com.yy.testruleonline.utils.Constants;
 
 import java.util.Map;
 
-public abstract class AbstractTagFunction<T> extends AbstractRuleFunction<T> {
+public abstract class AbstractTagFunction<T> extends AbstractRuleFunction {
 
 
     @Override

@@ -170,6 +170,7 @@ public  class RuleInitService<T> {
             }
             List<TagBo> inputTagList = new ArrayList<>();
             RuleBo ruleBo = new RuleBo();
+            ruleBo.setRule(r);
             CondGrpBo condGrpBo = initConditionGroupBo( r.getCondGrpName(), inputTagList, forceActionList);
             ruleBo.setCondGrpBo(condGrpBo);
             ruleBo.setActnBoList(actnBoList);

@@ -4,7 +4,10 @@ import com.googlecode.aviator.AviatorEvaluator;
 import com.yy.testruleonline.bo.CondGrpBo;
 import com.yy.testruleonline.bo.RuleBo;
 import com.yy.testruleonline.dao.service.impl.RuleServiceImpl;
+import com.yy.testruleonline.enums.ExceptionType;
 import com.yy.testruleonline.enums.RuleRunResult;
+import com.yy.testruleonline.exceptions.ExceptionUtils;
+import com.yy.testruleonline.exceptions.RuleException;
 import com.yy.testruleonline.rule.converter.TagConverter;
 import com.yy.testruleonline.rule.service.RuleInitService;
 import com.yy.testruleonline.utils.Constants;
@@ -76,28 +79,40 @@ public abstract class AbstractRuleManager<R, T> {
         boolean isSatisfied = false;
         //若找不到规则
         if(ruleBo== null) {
-            responseParam.put(Constants.resultMap.responseCode, RuleRunResult.NO_RULE);
+            responseParam.put(Constants.resultMap.ruleResult, RuleRunResult.NO_RULE);
             responseParam.put(Constants.resultMap.isSatisfied, isSatisfied);
             return responseParam;
         }
 
         //正式执行规则
-        isSatisfied = doExecuteConditionGrp(context, ruleBo);
-        responseParam.put(Constants.resultMap.isSatisfied, isSatisfied);
+        isSatisfied = doExecuteConditionGrp(context, ruleBo,responseParam);
         actionManager.runAction(context, responseParam, ruleBo, isSatisfied);
 
         return responseParam;
     }
 
-    private boolean doExecuteConditionGrp(T context, RuleBo ruleBo) {
+    private boolean doExecuteConditionGrp(T context, RuleBo ruleBo, Map<String, Object> responseParam) {
+        boolean isSatisfied = false;
         CondGrpBo condGrpBo = ruleBo.getCondGrpBo();
-        StringBuilder stringBuilder = new StringBuilder().append(conditionGroupEquation).append("('").append(Constants.conditionGroupBo).append("')");
         Map<String, Object> env = new HashMap<>();
         env.put(Constants.conditionGroupBo, condGrpBo);
         env.put(Constants.context, context);
-        boolean isSatisfied = (boolean) AviatorEvaluator.execute(stringBuilder.toString(), env);
-        System.out.println("isSatisfiedCondition:" + isSatisfied + "\n");
+        try {
+            StringBuilder stringBuilder = new StringBuilder().append(conditionGroupEquation).append("('").append(Constants.conditionGroupBo).append("')");
+         
+            isSatisfied = (boolean) AviatorEvaluator.execute(stringBuilder.toString(), env);
+            System.out.println("isSatisfiedCondition:" + isSatisfied + "\n");
+        } catch (Exception e) {
+            if(e instanceof RuleException){
+            }else {
+                e = new RuleException(ExceptionType.COND_RULE_EXECUTE_EXCEPTION,ruleBo.getRule().getRuleName(),e);
+            }
+            ExceptionUtils.addExcption(env,e);
+        }
+        responseParam.put(Constants.resultMap.isSatisfied, isSatisfied);
+        responseParam.put(Constants.resultMap.ruleException, ExceptionUtils.parseExceptionString(env.get(Constants.ruleException)));
         return isSatisfied;
+
     }
 
     /**
