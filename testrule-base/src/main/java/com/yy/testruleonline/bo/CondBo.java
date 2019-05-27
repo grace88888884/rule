@@ -1,8 +1,6 @@
 package com.yy.testruleonline.bo;
 
 import com.yy.testruleonline.dao.entity.TReCond;
-import com.yy.testruleonline.dao.entity.TReTag;
-import com.yy.testruleonline.dao.entity.TReTagRng;
 import com.yy.testruleonline.enums.CondType;
 
 public class CondBo {

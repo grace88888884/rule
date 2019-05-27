@@ -98,7 +98,7 @@ public class TagValueParser {
             }
             return parseResult;
         }catch (Exception e){
-            throw new RuleException(ExceptionType.TAG_PARSER_EXCEPTION,tagBo.getTag().getTagName(), e);
+            throw new RuleException(ExceptionType.TAG_PARSER_EXCEPTION,tagBo.getRuleTag().tagName(), e);
         }
         
     }

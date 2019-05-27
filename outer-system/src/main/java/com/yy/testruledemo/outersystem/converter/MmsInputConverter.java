@@ -1,6 +1,7 @@
 package com.yy.testruledemo.outersystem.converter;
 
 import com.yy.testrule.common.data.MmsContextInput;
+import com.yy.testrule.common.enums.MmsType;
 import com.yy.testruledemo.outersystem.AuthContext;
 import com.yy.testruleonline.rule.converter.InputConverter;
 import org.springframework.stereotype.Component;

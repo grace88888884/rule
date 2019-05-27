@@ -1,8 +1,6 @@
 package com.yy.testruleonline.bo;
 
 import com.yy.testruleonline.dao.entity.TReActn;
-import com.yy.testruleonline.dao.entity.TReTagRng;
-import com.yy.testruleonline.dao.entity.TReTag;
 import com.yy.testruleonline.enums.ActionType;
 import com.yy.testruleonline.rule.annotation.RuleTag;
 
