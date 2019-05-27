@@ -13,7 +13,12 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>testrule-online</module>
-        <module>testrule-demo</module>
+        <module>testrule-base</module>
+        <module>mms-online</module>
+        <module>outer-system</module>
+        <module>mms-testrule-domain</module>
+        <module>mms-dao</module>
+        <module>mms-testrule-common</module>
+        <module>testrule-api</module>
     </modules>
 </project>

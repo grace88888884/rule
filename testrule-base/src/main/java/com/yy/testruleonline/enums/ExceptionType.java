@@ -1,0 +1,28 @@
+package com.yy.testruleonline.enums;
+
+import com.baomidou.mybatisplus.enums.IEnum;
+import com.fasterxml.jackson.annotation.JsonValue;
+
+import java.io.Serializable;
+
+public enum  ExceptionType implements IEnum {
+    TAG_PARSER_EXCEPTION("标签转换错误"),
+    COND_EXECUTE_EXCEPTION("条件执行错误");
+    private String desc;
+
+    
+    
+    ExceptionType(final String desc) {
+        this.desc = desc;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    @Override
+    public Serializable getValue() {
+        return this.desc;
+    }
+    
+}
