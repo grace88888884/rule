@@ -50,7 +50,6 @@ public class TagValueParser {
         try {
             Object input = env.get(context);
             Object parseResult = null;
-            Object parseInput = null;
             TagType tagType = tagBo.getTagType();
             Field[] fields = input.getClass().getDeclaredFields();
             Field tagField = null;
@@ -58,7 +57,7 @@ public class TagValueParser {
                 if (field.isAnnotationPresent(RuleTag.class) && tagBo.getRuleTag().tagName().equals(field.getAnnotation(RuleTag.class).tagName())) {
                     field.setAccessible(true);
 
-                    parseInput = field.get(input);
+                    parseResult = field.get(input);
                         tagField = field;
                    
                     break;
@@ -67,14 +66,10 @@ public class TagValueParser {
 //        String parseStr = input.get(tagBo.getRuleTag().tagName());
             switch (tagType) {
                 case NUM:
-                    if (parseInput != null) {
-                        parseResult = new BigDecimal(parseInput.toString());
-                    }
-                    break;
                 case ENUM:
                 case STRING:
-                    if (parseInput != null) {
-                        parseResult = parseInput.toString();
+                    if (parseResult != null) {
+                        tagField.set(input,parseResult);
                     }
                     break;
                 case CACULATION:
@@ -98,6 +93,7 @@ public class TagValueParser {
             }
             return parseResult;
         }catch (Exception e){
+            e.printStackTrace();
             throw new RuleException(ExceptionType.TAG_PARSER_EXCEPTION,tagBo.getRuleTag().tagName(), e);
         }
         
