@@ -7,7 +7,7 @@ import java.util.List;
 public class RuleGeneralResponse<I> {
     String ruleResult;
     List<String> ruleException;
-    Boolean isSatisfied;
+    Boolean isSatisfied =false;
     I result;
 
     public List<String> getRuleException() {

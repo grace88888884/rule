@@ -28,6 +28,6 @@ public interface TReCondMapper extends BaseMapper<TReCond> {
             "#{item} "+
             "</foreach>" +
             "</script>")
-    List<TReCond> selectByConditionGroupNames(@Param("condNames") Set<String> condNames);
+    List<TReCond> selectByConditionNames(@Param("condNames") Set<String> condNames);
 
 }

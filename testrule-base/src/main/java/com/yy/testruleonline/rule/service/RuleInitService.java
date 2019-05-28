@@ -133,12 +133,12 @@ public  class RuleInitService<T> {
         });
         List<TReCond> conditions = new ArrayList<>();
         if (conditionNameAllSet.size() > 0) {
-            conditions = condMapper.selectByConditionGroupNames(conditionNameAllSet);
+            conditions = condMapper.selectByConditionNames(conditionNameAllSet);
         }
 
         conditionMap = conditions.stream().collect(Collectors.toMap(TReCond::getCondName, t -> t));
         List<TReActn> actions = new ArrayList<>();
-        if (conditionNameAllSet.size() > 0) {
+        if (actionNameSet.size() > 0) {
             actions = actnMapper.selectByActionDetailNames(actionNameSet);
         }
         actionMap = actions.stream().collect(Collectors.toMap(TReActn::getActnName, t -> t));

@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 public enum OperationType implements IEnum {
     EQ("等于","="),
+    NEQ("不等于","!="),
     GT("大于",">"),
     GE("大于等于",">="),
     LT("小于","<"),

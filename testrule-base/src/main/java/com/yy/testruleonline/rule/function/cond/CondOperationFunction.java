@@ -40,6 +40,9 @@ public class CondOperationFunction extends AbstractRuleFunction {
                     case EQ:
                         returnResult = inputParam.equals(outputParam) ? AviatorBoolean.TRUE : AviatorBoolean.FALSE;
                         break;
+                    case NEQ:
+                        returnResult = inputParam.equals(outputParam) ? AviatorBoolean.FALSE : AviatorBoolean.TRUE;
+                        break;
                     case GE:
                     case GT:
                     case LE:
@@ -56,6 +59,7 @@ public class CondOperationFunction extends AbstractRuleFunction {
                 condResultProcessor.processCondDeclineAction(env.get(context),condBo);
             }
         }catch (Exception e){
+            e.printStackTrace();
             if(e instanceof RuleException){
             }else {
                 e = new RuleException(ExceptionType.COND_EXECUTE_EXCEPTION,condBo.getCond().getCondName(),e);

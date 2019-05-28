@@ -23,8 +23,6 @@ public enum TagType implements IEnum {
     public Serializable getValue() {
         return this.code;
     }
-
-    @JsonValue
     public String getDesc() {
         return this.desc;
     }

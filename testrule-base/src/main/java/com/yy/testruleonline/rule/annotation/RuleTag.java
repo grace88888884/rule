@@ -13,5 +13,6 @@ public @interface RuleTag {
     String tagName();
     TagType tagType();
     String tagDesc();
+    Class tagRange() default void.class;
     Class tagFun() default void.class;
 }

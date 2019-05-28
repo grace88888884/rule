@@ -103,6 +103,7 @@ public abstract class AbstractRuleManager<R, T> {
             isSatisfied = (boolean) AviatorEvaluator.execute(stringBuilder.toString(), env);
             System.out.println("isSatisfiedCondition:" + isSatisfied + "\n");
         } catch (Exception e) {
+            e.printStackTrace();
             if(e instanceof RuleException){
             }else {
                 e = new RuleException(ExceptionType.COND_RULE_EXECUTE_EXCEPTION,ruleBo.getRule().getRuleName(),e);
