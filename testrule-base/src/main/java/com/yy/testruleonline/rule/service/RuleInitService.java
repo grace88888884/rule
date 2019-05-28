@@ -31,11 +31,7 @@ public  class RuleInitService<T> {
 
     @Autowired
     public TReActnMapper actnMapper;
-    @Autowired
-    public TReTagRngMapper tagRngMapper;
 
-    @Autowired
-    public TReTagMapper tagMapper;
 
     Map<String, RuleBo> ruleBoMap = new HashMap<>();
 

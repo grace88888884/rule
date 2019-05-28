@@ -7,7 +7,6 @@ import com.yy.testruleonline.bo.CondBo;
 import com.yy.testruleonline.enums.ExceptionType;
 import com.yy.testruleonline.enums.FunctionType;
 import com.yy.testruleonline.enums.OperationType;
-import com.yy.testruleonline.exceptions.ExceptionUtils;
 import com.yy.testruleonline.exceptions.RuleException;
 import com.yy.testruleonline.rule.function.AbstractRuleFunction;
 import com.yy.testruleonline.rule.function.action.ICondResultProcessor;
@@ -60,11 +59,15 @@ public class CondOperationFunction extends AbstractRuleFunction {
             }
         }catch (Exception e){
             e.printStackTrace();
-            if(e instanceof RuleException){
-            }else {
-                e = new RuleException(ExceptionType.COND_EXECUTE_EXCEPTION,condBo.getCond().getCondName(),e);
+            if (e.getCause() instanceof RuleException) {
+                RuleException cause = (RuleException) e.getCause();
+                throw cause;
+            } else if (e instanceof RuleException) {
+                RuleException cause = (RuleException) e;
+                throw  cause;
+            } else {
+                throw new RuleException(ExceptionType.COND_EXECUTE_EXCEPTION, condBo.getCond().getCondName(), e);
             }
-            ExceptionUtils.addExcption(env,e);
         }
         return returnResult;
     }

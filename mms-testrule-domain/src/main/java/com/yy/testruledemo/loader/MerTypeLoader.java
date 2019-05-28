@@ -14,8 +14,6 @@ import java.util.TreeSet;
 public class MerTypeLoader extends AbstractRuleFunctionDataLoader<MmsContext> {
     @Autowired
     public TReMerTypeServiceImpl merTypeService;
-    @Autowired
-    public MerNoLoader merNoLoader;
 
     @Override
     public String getData(MmsContext mmsContext) {
@@ -43,7 +41,6 @@ public class MerTypeLoader extends AbstractRuleFunctionDataLoader<MmsContext> {
 
     @Override
     public void initFormLoader(TreeSet<AbstractRuleFunctionDataLoader> formLoaderList) {
-        formLoaderList.add(merNoLoader);
         return;
     }
 

@@ -53,17 +53,19 @@ public class CondGrpRelationFunction extends AbstractRuleFunction {
             }
 
             Boolean result = (Boolean) AviatorEvaluator.execute(parentExpressionBuilder.toString(), param);
-            if(param.get(ruleException)!=null&&param.get(ruleException) instanceof ArrayList) {
-                ExceptionUtils.addExcption(env, (ArrayList<Exception>)param.get(ruleException));
-            }
             returnResult= result ? AviatorBoolean.TRUE : AviatorBoolean.FALSE;
         } catch (Exception e) {
             e.printStackTrace();
-            if (e instanceof RuleException) {
+            if (e.getCause() instanceof RuleException) {
+                RuleException cause = (RuleException) e.getCause();
+                throw cause;
+            } else if (e instanceof RuleException) {
+                RuleException cause = (RuleException) e;
+                throw cause;
             } else {
                 e = new RuleException(ExceptionType.COND_RELATION_EXECUTE_EXCEPTION,  e);
+                ExceptionUtils.addExcption(env, e);
             }
-            ExceptionUtils.addExcption(env, e);
         }
         return returnResult;
     }

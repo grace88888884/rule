@@ -11,19 +11,27 @@ public class RuleException extends RuntimeException {
         this.exceptionType = exceptionType;
         this.exception = exception;
     }
+    public RuleException(ExceptionType exceptionType,String message) {
+        super(exceptionType.getDesc()+","+message);
+        this.exceptionType = exceptionType;
+    }
 
     public ExceptionType getExceptionType() {
         return exceptionType;
     }
 
-    public void setExceptionType(ExceptionType exceptionType) {
-        this.exceptionType = exceptionType;
+    public Exception getException() {
+        return exception;
     }
 
-    public RuleException( ExceptionType exceptionType,Exception exception) {
+
+    public RuleException(ExceptionType exceptionType, Exception exception) {
         super(exceptionType.getDesc());
         this.exceptionType = exceptionType;
         this.exception = exception;
-
+    }
+    public RuleException( ExceptionType exceptionType) {
+        super(exceptionType.getDesc());
+        this.exceptionType = exceptionType;
     }
 }

@@ -6,6 +6,7 @@ import com.yy.testruleonline.bo.TagBo;
 import com.yy.testruleonline.enums.CondType;
 import com.yy.testruleonline.enums.ExceptionType;
 import com.yy.testruleonline.enums.TagType;
+import com.yy.testruleonline.exceptions.ExceptionUtils;
 import com.yy.testruleonline.exceptions.RuleException;
 import com.yy.testruleonline.rule.annotation.RuleTag;
 import com.yy.testruleonline.rule.function.tag.AbstractTagFunction;
@@ -20,12 +21,12 @@ import static com.yy.testruleonline.utils.Constants.context;
 public class TagValueParser {
     
 
-    public static Object parseInputTagType(Map<String, Object> env, CondBo condBo) {
+    public static Object parseInputTagType(Map<String, Object> env, CondBo condBo)  {
         return parseTagType(env, condBo.getLeftTagBo());
     }
 
 
-    public static Object parseOutputTagType(Map<String, Object> env, CondBo condBo) {
+    public static Object parseOutputTagType(Map<String, Object> env, CondBo condBo)  {
         Object parseResult = null;
         CondType condType = condBo.getCondType();
         switch (condType) {
@@ -94,7 +95,12 @@ public class TagValueParser {
             return parseResult;
         }catch (Exception e){
             e.printStackTrace();
-            throw new RuleException(ExceptionType.TAG_PARSER_EXCEPTION,tagBo.getRuleTag().tagName(), e);
+            if(e.getCause() instanceof RuleException){
+                RuleException cause = (RuleException) e.getCause();
+                throw cause;
+            }else {
+                throw new RuleException(ExceptionType.TAG_PARSER_EXCEPTION,tagBo.getRuleTag().tagName(), e);
+            }
         }
         
     }

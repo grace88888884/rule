@@ -1,4 +1,4 @@
-package com.yy.testruledemo.loader;
+package com.yy.testruledemo.converter;
 
 import com.yy.testrule.common.data.MmsContextOutput;
 import com.yy.testruledemo.MmsContext;

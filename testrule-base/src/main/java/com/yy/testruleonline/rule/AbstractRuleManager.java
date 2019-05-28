@@ -104,11 +104,15 @@ public abstract class AbstractRuleManager<R, T> {
             System.out.println("isSatisfiedCondition:" + isSatisfied + "\n");
         } catch (Exception e) {
             e.printStackTrace();
-            if(e instanceof RuleException){
-            }else {
-                e = new RuleException(ExceptionType.COND_RULE_EXECUTE_EXCEPTION,ruleBo.getRule().getRuleName(),e);
+            Exception exception;
+            if (e.getCause() instanceof RuleException) {
+                 exception = (RuleException) e.getCause();
+            } else if (e instanceof RuleException) {
+                exception =  e;
+            } else { 
+                exception = new RuleException(ExceptionType.COND_RULE_EXECUTE_EXCEPTION,ruleBo.getRule().getRuleName(),e);
             }
-            ExceptionUtils.addExcption(env,e);
+            ExceptionUtils.addExcption(env,exception);
         }
         responseParam.put(Constants.resultMap.isSatisfied, isSatisfied);
         responseParam.put(Constants.resultMap.ruleException, ExceptionUtils.parseExceptionString(env.get(Constants.ruleException)));

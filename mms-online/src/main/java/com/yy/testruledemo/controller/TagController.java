@@ -5,10 +5,6 @@ import com.yy.testrule.common.enums.MmsType;
 import com.yy.testruledemo.MmsContext;
 import com.yy.testruledemo.vo.TagRangeVo;
 import com.yy.testruledemo.vo.TagVo;
-import com.yy.testruleonline.dao.entity.TReTag;
-import com.yy.testruleonline.dao.entity.TReTagRng;
-import com.yy.testruleonline.dao.service.impl.TagRangeServiceImpl;
-import com.yy.testruleonline.enums.TagType;
 import com.yy.testruleonline.rule.TagManager;
 import com.yy.testruleonline.rule.annotation.RuleTag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +29,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/tag")
 public class TagController {
-    @Autowired
-    TagRangeServiceImpl tagRangeService;
+
     @Autowired
     TagManager<MmsContext> tagManager;
 
@@ -69,23 +64,5 @@ public class TagController {
         return tagVoList;
     }
 
-    @ResponseBody
-    @RequestMapping("/addTest")
-    public boolean addParamClassifyTest(String key) {
-        TReTag TReTag = new TReTag();
-        TReTag.setTagName(key + "MerType");
-        TReTag.setTagDesc(key + "商户分类");
-        TReTag.setTagType(TagType.ENUM);
-
-        List<TReTagRng> TReTagRngs = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            TReTagRng param = new TReTagRng();
-            param.setTagRngName(key + "mer" + i);
-            param.setTagRngDesc(key + "商户" + i);
-            TReTagRngs.add(param);
-        }
-        tagRangeService.addTag(TReTag, TReTagRngs);
-        return false;
-    }
 
 }
