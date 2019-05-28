@@ -21,6 +21,10 @@ public enum MmsType implements IEnum {
 
     private String desc;
 
+    public String getDesc() {
+        return desc;
+    }
+
     MmsType(final String desc) {
         this.desc = desc;
     }

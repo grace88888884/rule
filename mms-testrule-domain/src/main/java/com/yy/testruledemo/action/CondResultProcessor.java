@@ -16,9 +16,11 @@ public  class CondResultProcessor implements ICondResultProcessor {
 
     public void processCondDeclineAction(Object context, CondBo condBo) {
         String declineReason = condBo.getCond().getDeclineReason();
-        MmsDeclineReason mmsDeclineReason = EnumUtil.getByCode(declineReason, MmsDeclineReason.class);
-        MmsContext mmsContext = (MmsContext) context;
-        mmsContext.addDeclineReason(mmsDeclineReason);
+        if(declineReason!=null) {
+            MmsDeclineReason mmsDeclineReason = EnumUtil.getByCode(declineReason, MmsDeclineReason.class);
+            MmsContext mmsContext = (MmsContext) context;
+            mmsContext.addDeclineReason(mmsDeclineReason);
+        }
     }
 
     @Override

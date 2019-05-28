@@ -13,6 +13,7 @@ public class MmsOutputConverter implements OutputConverter<AuthContext, MmsConte
         output.setOutput1(value.getOutput1());
         output.setOutput2(value.getOutput2());
         output.setDeclineReasons(value.getDeclineReasons());
+        output.setMerType(value.getMerType());
     }
 
     @Override

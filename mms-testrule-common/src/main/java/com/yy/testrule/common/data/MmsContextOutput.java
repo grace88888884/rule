@@ -7,7 +7,16 @@ import java.util.List;
 public  class MmsContextOutput {
         private String output1;
         private String output2;
+        private String merType;
         private List<MmsDeclineReason> declineReasons;
+
+    public String getMerType() {
+        return merType;
+    }
+
+    public void setMerType(String merType) {
+        this.merType = merType;
+    }
 
     public List<MmsDeclineReason> getDeclineReasons() {
         return declineReasons;

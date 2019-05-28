@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.googlecode.aviator.runtime.type.AviatorDecimal;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 import com.yy.testrule.common.data.MmsContextInput;
+import com.yy.testrule.common.enums.MmsType;
 import com.yy.testrule.dao.entity.TReMerPolicy;
 import com.yy.testrule.common.enums.SelfDefineFunctionType;
 import com.yy.testruledemo.MmsContext;
@@ -31,12 +32,12 @@ public class DayAmtPolicyLmt1Tag extends AbstractTagFunction<MmsContext> {
     @Override
     public AviatorObject calTagValue(MmsContext context) {
         EntityWrapper<TReMerPolicy> wrapper = new EntityWrapper<>();
-        String merType = context.getMmsType();
-        if (merType == null) {
-            merType = merTypeLoader.loadData(context);
+        String mmsType = context.getMmsType();
+        if (mmsType == null) {
+            mmsType = merTypeLoader.loadData(context);
         }
 
-        wrapper.eq("mer_type", merType);
+        wrapper.eq("mer_type", mmsType);
         TReMerPolicy merPolicy = merPolicyService.selectOne(wrapper);
         return new AviatorDecimal(merPolicy.getDayAmtLmt());
     }

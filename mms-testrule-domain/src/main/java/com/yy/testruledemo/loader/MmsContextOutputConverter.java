@@ -13,6 +13,7 @@ public class MmsContextOutputConverter implements TagConverter<MmsContext, MmsCo
     public MmsContextOutput convert(MmsContext value) {
         MmsContextOutput mmsContextOutput = new MmsContextOutput();
         mmsContextOutput.setDeclineReasons(value.getDeclineReasonList());
+        mmsContextOutput.setMerType(value.getMmsType());
         return mmsContextOutput;
     }
 }

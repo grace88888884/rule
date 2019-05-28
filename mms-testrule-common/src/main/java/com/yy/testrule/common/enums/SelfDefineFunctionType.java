@@ -7,6 +7,7 @@ public class SelfDefineFunctionType extends FunctionType {
     public static final String DAYCOUNTLMT1 = "dayCountLmt1";
     public static final String DAY_AMT_STAT_LMT = "dayAmtStatLmt1";
     public static final String DAY_AMT_POLICY_LMT1 = "dayAmtPolicyLmt1";
+    public static final String MER_TYPE = "merType";
     public static final String TEST = "test";
 
 }
