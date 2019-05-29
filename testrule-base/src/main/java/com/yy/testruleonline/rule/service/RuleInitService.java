@@ -48,7 +48,7 @@ public  class RuleInitService<T> {
      *
      * @return
      */
-    public Map<String, RuleBo> refreshRuleBoList(Class<T> context) {
+    public Map<String, RuleBo> refreshRuleBoList(Class context) {
         conditionMap = new HashMap<>();
         conditionGroupMap = new HashMap<>();
         actionMap = new HashMap<>();
@@ -183,8 +183,11 @@ public  class RuleInitService<T> {
         actnBo.setTReActn(t);
         Optional.ofNullable(t.getTagName())
                 .ifPresent(tagName -> {
-                    actnBo.setRuleTag(tagAnnotationMap.get(tagName));
-
+                    if(tagAnnotationMap.get(tagName)!=null){
+                        actnBo.setRuleTag(tagAnnotationMap.get(tagName));
+                    }else {
+                        System.out.println("没有找到对应标签");
+                    }
                 }); 
         Optional.ofNullable(t.getFunName())
                 .ifPresent(tagName -> {
@@ -202,9 +205,19 @@ public  class RuleInitService<T> {
             conditionGroup.getCondNameSet().forEach(t -> {
                 TReCond condition = conditionMap.get(t);
                 CondBo condBo = new CondBo();
-                condBo.setLeftTagBo(initTagBo(condition.getTagName(), forceActionList));
+                TagBo leftBo = initTagBo(condition.getTagName(), forceActionList);
+                if(leftBo!=null) {
+                    condBo.setLeftTagBo(leftBo);
+                }else {
+                    System.out.println("没有找到对应标签");
+                }
                 condBo.setCondType(condition.getCondType());
-                condBo.setRightTagBo(initTagBo(condition.getResultTagName(),  forceActionList));
+                TagBo rightBo = initTagBo(condition.getResultTagName(), forceActionList);
+                if(rightBo!=null) {
+                    condBo.setRightTagBo(rightBo);
+                }else {
+                    System.out.println("没有找到对应标签");
+                }
                 inputTagList.add(condBo.getLeftTagBo());
                 inputTagList.add(condBo.getRightTagBo());
 
@@ -227,6 +240,7 @@ public  class RuleInitService<T> {
     private TagBo initTagBo(String tagName,  List<IForceAction> forceActionList) {
         RuleTag ruleTag = tagAnnotationMap.get(tagName);
         if (ruleTag == null) {
+            System.out.println("没有找到对应标签");
             return null;
         }
         Object forceAction = SpringBeanFactory.getBean(ruleTag.tagFun());

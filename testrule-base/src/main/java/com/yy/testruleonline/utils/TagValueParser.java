@@ -1,6 +1,7 @@
 package com.yy.testruleonline.utils;
 
 import com.googlecode.aviator.AviatorEvaluator;
+import com.sun.javafx.css.Rule;
 import com.yy.testruleonline.bo.CondBo;
 import com.yy.testruleonline.bo.TagBo;
 import com.yy.testruleonline.enums.CondType;
@@ -9,6 +10,7 @@ import com.yy.testruleonline.enums.TagType;
 import com.yy.testruleonline.exceptions.ExceptionUtils;
 import com.yy.testruleonline.exceptions.RuleException;
 import com.yy.testruleonline.rule.annotation.RuleTag;
+import com.yy.testruleonline.rule.annotation.RuleTagCollection;
 import com.yy.testruleonline.rule.function.tag.AbstractTagFunction;
 
 import java.lang.reflect.Field;
@@ -49,21 +51,45 @@ public class TagValueParser {
    
     private static Object parseTagType(Map<String, Object> env, TagBo tagBo) {
         try {
+            if(tagBo==null){
+                throw new RuleException(ExceptionType.TAG_NOT_FOUND);
+            }
             Object input = env.get(context);
             Object parseResult = null;
             TagType tagType = tagBo.getTagType();
             Field[] fields = input.getClass().getDeclaredFields();
             Field tagField = null;
+            Object ruleTagCollectionObj = null;
             for (Field field : fields) {
-                if (field.isAnnotationPresent(RuleTag.class) && tagBo.getRuleTag().tagName().equals(field.getAnnotation(RuleTag.class).tagName())) {
+                Class<?> declaringClass = field.getType();
+                if(declaringClass.isAnnotationPresent(RuleTagCollection.class)){
                     field.setAccessible(true);
-
-                    parseResult = field.get(input);
-                        tagField = field;
-                   
+                     ruleTagCollectionObj = field.get(input);
+                    Field[] ruleTagCollectionFields = declaringClass.getDeclaredFields();
+                    for(Field ruleTagCollectionField:ruleTagCollectionFields){
+                        if (ruleTagCollectionField.isAnnotationPresent(RuleTag.class)&& tagBo.getRuleTag().tagName().equals(ruleTagCollectionField.getAnnotation(RuleTag.class).tagName())) {
+                            ruleTagCollectionField.setAccessible(true);
+                            field.setAccessible(true);
+                            parseResult = ruleTagCollectionField.get(ruleTagCollectionObj);
+                            tagField = ruleTagCollectionField;
+                            break;
+                        }
+                    }
                     break;
                 }
             }
+            
+            
+//            for (Field field : fields) {
+//                if (field.isAnnotationPresent(RuleTag.class) && tagBo.getRuleTag().tagName().equals(field.getAnnotation(RuleTag.class).tagName())) {
+//                    field.setAccessible(true);
+//
+//                    parseResult = field.get(input);
+//                        tagField = field;
+//                   
+//                    break;
+//                }
+//            }
 //        String parseStr = input.get(tagBo.getRuleTag().tagName());
             switch (tagType) {
                 case NUM:
@@ -85,7 +111,8 @@ public class TagValueParser {
 
                         if (funName != null) {
                             parseResult = AviatorEvaluator.execute(funName + "()", env);
-                                tagField.set(input,parseResult);
+                            tagField.setAccessible(true);    
+                            tagField.set(ruleTagCollectionObj,parseResult);
 
                         }
                     }
@@ -97,6 +124,9 @@ public class TagValueParser {
             e.printStackTrace();
             if(e.getCause() instanceof RuleException){
                 RuleException cause = (RuleException) e.getCause();
+                throw cause;
+            }else if(e instanceof RuleException){
+                RuleException cause = (RuleException) e;
                 throw cause;
             }else {
                 throw new RuleException(ExceptionType.TAG_PARSER_EXCEPTION,tagBo.getRuleTag().tagName(), e);

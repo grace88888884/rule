@@ -30,9 +30,7 @@ public class ActionManager<T> {
                 responseParam.put(Constants.resultMap.ruleResult, RuleRunResult.RUN_ACTION);
             });
 
-            ruleBo.getForceActionList().forEach(t ->
-                    t.doAction(context)
-            );
+        
 
         } else if (ruleBo.getElseActnBoList() != null && ruleBo.getElseActnBoList().size() > 0) {
             ruleBo.getElseActnBoList().forEach(t -> {
@@ -45,6 +43,10 @@ public class ActionManager<T> {
         } else {
             responseParam.put(Constants.resultMap.ruleResult, RuleRunResult.RUN_NOTHING);
         }
+
+        ruleBo.getForceActionList().forEach(t ->
+                t.doAction(context,isSatisfied)
+        );
     }
 
 

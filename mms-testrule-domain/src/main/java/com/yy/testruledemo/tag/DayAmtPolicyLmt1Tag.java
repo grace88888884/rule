@@ -32,7 +32,7 @@ public class DayAmtPolicyLmt1Tag extends AbstractTagFunction<MmsContext> {
     @Override
     public AviatorObject calTagValue(MmsContext context) {
         EntityWrapper<TReMerPolicy> wrapper = new EntityWrapper<>();
-        String mmsType = context.getMmsType();
+        String mmsType = context.getMmsTagBo().getMmsType();
         if (mmsType == null) {
             mmsType = merTypeLoader.loadData(context);
         }

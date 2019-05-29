@@ -1,6 +1,7 @@
 package com.yy.testruleonline.rule;
 
 import com.yy.testruleonline.rule.annotation.RuleTag;
+import com.yy.testruleonline.rule.annotation.RuleTagCollection;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
@@ -12,9 +13,15 @@ public class TagManager<T> {
         Map<String, RuleTag> ruleTagMap = new HashMap<>();
         Field[] fields = contextClass.getDeclaredFields();
         for (Field field : fields) {
-            if (field.isAnnotationPresent(RuleTag.class)) {
-                RuleTag ruleTag = field.getAnnotation(RuleTag.class);
-                ruleTagMap.put(ruleTag.tagName(), ruleTag);
+            Class<?> declaringClass = field.getType();
+            if(declaringClass.isAnnotationPresent(RuleTagCollection.class)){
+                Field[] ruleTagCollectionFields = declaringClass.getDeclaredFields();
+                for(Field ruleTagCollectionField:ruleTagCollectionFields){
+                    if (ruleTagCollectionField.isAnnotationPresent(RuleTag.class)) {
+                        RuleTag ruleTag = ruleTagCollectionField.getAnnotation(RuleTag.class);
+                        ruleTagMap.put(ruleTag.tagName(), ruleTag);
+                    }
+                }
             }
         }
         return ruleTagMap;

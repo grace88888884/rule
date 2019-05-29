@@ -17,7 +17,7 @@ public class MerTypeLoader extends AbstractRuleFunctionDataLoader<MmsContext> {
 
     @Override
     public String getData(MmsContext mmsContext) {
-        Object merNo = mmsContext.getMerNo();
+        Object merNo = mmsContext.getMmsTagBo().getMerNo();
         if (merNo != null) {
             EntityWrapper<TReMerType> wrapper = new EntityWrapper<>();
             wrapper.eq("mer_no", merNo);
