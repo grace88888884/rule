@@ -1,9 +1,9 @@
 package com.yy.testruledemo.controller;
 
 import com.yy.testrule.common.data.MmsContextInput;
+import com.yy.testruleonline.bo.RuleFlowBo;
 import com.yy.testruleonline.rule.api.RuleGeneralRequest;
 import com.yy.testruledemo.MmsRuleManager;
-import com.yy.testruleonline.bo.RuleBo;
 import com.yy.testruleonline.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,8 +23,8 @@ public class TestController {
     @ResponseBody
     @RequestMapping("/init")
     public boolean init() {
-        Map<String, RuleBo> ruleBoMap = ruleManager.getRuleBoList();
-        Constants.ruleBoMap = ruleBoMap;
+        Map<String, RuleFlowBo> ruleFlowBoMap = ruleManager.getRuleFlowBoList();
+        Constants.ruleFlowBoMap = ruleFlowBoMap;
         return false;
     }
 
@@ -32,8 +32,8 @@ public class TestController {
     @ResponseBody
     @RequestMapping("/refreshRuleBoList")
     public boolean refreshRuleBoList() {
-        Map<String, RuleBo> ruleBoMap = ruleManager.refreshRuleBoList();
-        Constants.ruleBoMap = ruleBoMap;
+        Map<String, RuleFlowBo> ruleFlowBoMap = ruleManager.refreshRuleFlowBoList();
+        Constants.ruleFlowBoMap = ruleFlowBoMap;
         return true;
     }
 
@@ -42,7 +42,7 @@ public class TestController {
     @ResponseBody
     @RequestMapping("/test")
     public Map<String, Object> test(@RequestParam Map<String,String> param) {
-//        Map<String, Object> resultMap = ruleManager.executeRule(param);
+//        Map<String, Object> resultMap = ruleManager.executeRuleFlow(param);
 //        return resultMap;
         return null;
     }
@@ -51,7 +51,7 @@ public class TestController {
     @ResponseBody
     @RequestMapping("/testMerGroup")
     public Map<String, Object> testMerGroup(@RequestBody RuleGeneralRequest<MmsContextInput> input) {
-        Map<String, Object> resultMap = ruleManager.executeRule(input.getRequest(), input.getRuleName());
+        Map<String, Object> resultMap = ruleManager.executeRuleFlow(input.getRequest(), input.getRuleFlowName());
         return resultMap;
     }
 

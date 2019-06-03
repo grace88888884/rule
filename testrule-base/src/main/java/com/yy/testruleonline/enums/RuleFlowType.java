@@ -5,24 +5,20 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.io.Serializable;
 
-public enum RelationType implements IEnum {
-    AND( "并且","&&"),
-    OR( "或者","||");
-    private String desc;
+public enum RuleFlowType implements IEnum {
+    PARALLEL("P", "平行"),
+    SEQ("Q", "顺序");
     private String code;
+    private String desc;
 
-    RelationType( final String desc,final String code) {
-        this.desc = desc;
+    RuleFlowType(final String code, final String desc) {
         this.code = code;
+        this.desc = desc;
     }
 
     @Override
     public Serializable getValue() {
-        return this.name();
-    }
-
-    public String getCode() {
-        return code;
+        return this.code;
     }
 
     @JsonValue

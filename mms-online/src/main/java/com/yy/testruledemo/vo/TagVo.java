@@ -1,9 +1,7 @@
 package com.yy.testruledemo.vo;
 
-import com.yy.testrule.common.enums.MmsType;
 import com.yy.testruleonline.enums.TagType;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 public class TagVo {

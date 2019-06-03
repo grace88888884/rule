@@ -1,7 +1,7 @@
 package com.yy.testrule.dao.mapper;
 
 import com.yy.testrule.dao.entity.TReMerPolicy;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>

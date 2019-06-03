@@ -1,7 +1,7 @@
 package com.yy.testruleonline.dao.service;
 
+import com.yy.testruleonline.dao.entity.TReRuleFlow;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yy.testruleonline.dao.entity.TReCond;
 
 /**
  * <p>
@@ -9,8 +9,8 @@ import com.yy.testruleonline.dao.entity.TReCond;
  * </p>
  *
  * @author yy
- * @since 2019-04-17
+ * @since 2019-05-29
  */
-public interface IConditionDetailService extends IService<TReCond> {
+public interface ITReRuleFlowService extends IService<TReRuleFlow> {
 
 }

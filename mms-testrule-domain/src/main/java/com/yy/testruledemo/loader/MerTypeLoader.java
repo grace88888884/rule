@@ -1,6 +1,6 @@
 package com.yy.testruledemo.loader;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yy.testrule.dao.entity.TReMerType;
 import com.yy.testrule.dao.service.impl.TReMerTypeServiceImpl;
 import com.yy.testruledemo.MmsContext;
@@ -19,9 +19,9 @@ public class MerTypeLoader extends AbstractRuleFunctionDataLoader<MmsContext> {
     public String getData(MmsContext mmsContext) {
         Object merNo = mmsContext.getMmsTagBo().getMerNo();
         if (merNo != null) {
-            EntityWrapper<TReMerType> wrapper = new EntityWrapper<>();
+            QueryWrapper<TReMerType> wrapper = new QueryWrapper<>();
             wrapper.eq("mer_no", merNo);
-            TReMerType tReMerType = merTypeService.selectOne(wrapper);
+            TReMerType tReMerType = merTypeService.getBaseMapper().selectOne(wrapper);
             return tReMerType!=null?tReMerType.getMerType():null;
         } else {
             return null;

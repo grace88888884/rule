@@ -26,14 +26,15 @@ public class RequestHelper<A, I, O> {
 
     }
 
-    public boolean executeRule(A context, String ruleName) {
+    public boolean executeRule(A context, String ruleFlowName) {
         I input = inputConverter.convert(context);
         RuleGeneralRequest ruleGeneralRequest = new RuleGeneralRequest();
         ruleGeneralRequest.setRequest(input);
-        ruleGeneralRequest.setRuleName(ruleName);
+        ruleGeneralRequest.setRuleFlowName(ruleFlowName);
         String result = restTemplate.postForObject("http://localhost:8080/rule/testMerGroup", ruleGeneralRequest, String.class);
         RuleGeneralResponse<O> ruleResponse = JSON.parseObject(result, new TypeReference<RuleGeneralResponse<O>>() {
         });
+        System.out.println("运行结果:"+ruleResponse.getRuleResult());
         String s = JSON.toJSONString(ruleResponse.getResult());
         O o = JSON.parseObject(s, outputConverter.getOutputClass());
         if(ruleResponse.getRuleException()!=null&&ruleResponse.getRuleException().size()>0){

@@ -1,7 +1,7 @@
 package com.yy.testruleonline.dao.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.yy.testruleonline.dao.entity.TReRule;
-import com.baomidou.mybatisplus.service.IService;
 
 /**
  * <p>

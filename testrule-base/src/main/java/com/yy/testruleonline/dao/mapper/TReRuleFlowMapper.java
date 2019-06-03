@@ -1,11 +1,13 @@
 package com.yy.testruleonline.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.yy.testruleonline.dao.entity.TReActn;
 import com.yy.testruleonline.dao.entity.TReRule;
-import org.apache.ibatis.annotations.Mapper;
+import com.yy.testruleonline.dao.entity.TReRuleFlow;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -13,26 +15,22 @@ import java.util.List;
  *  Mapper 接口
  * </p>
  *
- * @author Mht
- * @since 2019-04-17
+ * @author yy
+ * @since 2019-05-29
  */
-@Mapper
-public interface TReRuleMapper extends BaseMapper<TReRule> {
-//    @Select("select * from rule where cond_grp_name in")
-
+public interface TReRuleFlowMapper extends BaseMapper<TReRuleFlow> {
 
     @Select("<script>" +
             "select\n" +
             " *\n" +
             "from\n" +
-            " t_re_rule \n" +
+            " t_re_rule_flow \n" +
             "where\n" +
-            "cond_grp_name in" +
-            "<foreach collection='condGrpNames' item='item' open='(' separator=',' close=')'>" +
+            "rule_name_list in" +
+            "<foreach collection='flowNames' item='item' open='(' separator=',' close=')'>" +
             "#{item} "+
             "</foreach>" +
             "</script>")
-    List<TReRule> getRuleByconditionGroupNames(@Param("condGrpNames") List<String> condGrpNames);
-   
-    
+    List<TReRule> selectByRuleNames(@Param("flowNames") Collection<String> flowNames);
+
 }

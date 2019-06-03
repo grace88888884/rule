@@ -1,11 +1,12 @@
 package com.yy.testruleonline.utils;
 
 import com.yy.testruleonline.bo.RuleBo;
+import com.yy.testruleonline.bo.RuleFlowBo;
 
 import java.util.Map;
 
 public class Constants {
-   public static Map<String, RuleBo> ruleBoMap;
+   public static Map<String, RuleFlowBo> ruleFlowBoMap;
 
    public final static String conditionGroupEquation = "conditionGroupRelation";
    public final static String conditionOperationEquation = "conditionOperation";

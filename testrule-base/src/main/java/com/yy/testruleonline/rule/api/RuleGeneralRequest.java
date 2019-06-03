@@ -1,15 +1,15 @@
 package com.yy.testruleonline.rule.api;
 
 public class RuleGeneralRequest<I> {
-    String ruleName;
+    String ruleFlowName;
     I request;
 
-    public String getRuleName() {
-        return ruleName;
+    public String getRuleFlowName() {
+        return ruleFlowName;
     }
 
-    public void setRuleName(String ruleName) {
-        this.ruleName = ruleName;
+    public void setRuleFlowName(String ruleFlowName) {
+        this.ruleFlowName = ruleFlowName;
     }
 
     public I getRequest() {

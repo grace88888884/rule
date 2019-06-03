@@ -1,6 +1,6 @@
 package com.yy.testrule.common.enums;
 
-import com.baomidou.mybatisplus.enums.IEnum;
+import com.baomidou.mybatisplus.core.enums.IEnum;
 import com.yy.testrule.common.utils.CodeEnum;
 
 import java.io.Serializable;

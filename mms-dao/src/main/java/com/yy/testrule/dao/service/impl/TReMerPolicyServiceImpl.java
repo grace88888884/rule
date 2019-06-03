@@ -3,7 +3,7 @@ package com.yy.testrule.dao.service.impl;
 import com.yy.testrule.dao.entity.TReMerPolicy;
 import com.yy.testrule.dao.mapper.TReMerPolicyMapper;
 import com.yy.testrule.dao.service.ITReMerPolicyService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

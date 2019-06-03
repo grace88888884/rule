@@ -3,7 +3,7 @@ package com.yy.testruleonline.dao.service.impl;
 import com.yy.testruleonline.dao.entity.TReCondGrp;
 import com.yy.testruleonline.dao.mapper.TReCondGrpMapper;
 import com.yy.testruleonline.dao.service.IConditionGroupService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

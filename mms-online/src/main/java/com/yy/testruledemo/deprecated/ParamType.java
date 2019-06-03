@@ -1,7 +1,7 @@
 /*
 package com.yy.testrule.common.enums;
 
-import com.baomidou.mybatisplus.enums.IEnum;
+import com.baomidou.mybatisplus.core.enums.IEnum;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.yy.testruleonline.enums.TagType;
 

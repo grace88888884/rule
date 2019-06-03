@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TestController {
     @Autowired
    private RequestHelper<AuthContext, MmsContextInput, MmsContextOutput> requestHelper;
-    private AuthContext authContext = new AuthContext();
+    private AuthContext authContext ;
   
     
 //    @Autowired
@@ -24,6 +24,7 @@ public class TestController {
     @ResponseBody
     @RequestMapping("/test")
     public AuthContext init(String merNo,String merType) {
+        authContext = new AuthContext();
         authContext.setMerNo(merNo);
         authContext.setMerType(merType);
         boolean isSatisfied = requestHelper.executeRule(authContext, "dayLmt2");

@@ -1,10 +1,8 @@
 package com.yy.testruleonline.rule.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yy.testruleonline.bo.*;
-import com.yy.testruleonline.dao.entity.TReActn;
-import com.yy.testruleonline.dao.entity.TReCond;
-import com.yy.testruleonline.dao.entity.TReCondGrp;
-import com.yy.testruleonline.dao.entity.TReRule;
+import com.yy.testruleonline.dao.entity.*;
 import com.yy.testruleonline.dao.mapper.*;
 import com.yy.testruleonline.dao.service.impl.RuleServiceImpl;
 import com.yy.testruleonline.enums.TagType;
@@ -19,15 +17,20 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 @Service
-public  class RuleInitService<T> {
+public  class RuleFlowInitService<T> {
     @Autowired
     public TReCondGrpMapper condGrpMapper;
 
     @Autowired
     public TReCondMapper condMapper;
+    @Autowired
+    public TReRuleMapper ruleMapper; 
+
   
     @Autowired
     public RuleServiceImpl ruleService;
+    @Autowired
+    public TReRuleFlowMapper ruleFlowMapper;
 
     @Autowired
     public TReActnMapper actnMapper;
@@ -43,24 +46,65 @@ public  class RuleInitService<T> {
     @Autowired
     private TagManager<T> tagManager;
 
+    public Map<String, RuleFlowBo> refreshRuleFlowBoList(Class context) {
+        List<TReRuleFlow> tReRuleFlows = ruleFlowMapper.selectList(null);
+        Set<String> ruleNameSet = new HashSet<>();
+        tReRuleFlows.forEach(r -> {
+            String ruleNameListStr = r.getRuleNameList();
+            if (!Strings.isBlank(ruleNameListStr)) {
+                String[] ruleNameList = ruleNameListStr.split("\\|");
+                for (int i = 0; i < ruleNameList.length; i++) {
+                    ruleNameSet.add(ruleNameList[i]);
+                }
+
+            }
+        });
+        Map<String, RuleFlowBo> ruleFlowBoMap = new HashMap<>();
+        Map<String, RuleBo> ruleBoMap = refreshRuleBoList(context, ruleNameSet);
+        tReRuleFlows.forEach(r -> {
+            RuleFlowBo ruleFlowBo = new RuleFlowBo();
+            ruleFlowBo.setRuleFlow(r);
+            String ruleNameListStr = r.getRuleNameList();
+            if (!Strings.isBlank(ruleNameListStr)) {
+                String[] ruleNameList = ruleNameListStr.split("\\|");
+                for (int i = 0; i < ruleNameList.length; i++) {
+                    ruleFlowBo.getRuleList().add(ruleBoMap.get(ruleNameList[i]));
+                }
+            }
+            ruleFlowBoMap.put(r.getRuleFlowName(), ruleFlowBo);
+        });
+
+
+        return ruleFlowBoMap;
+    }
+
+
     /**
      * 刷新ruleList对象
      *
      * @return
      */
-    public Map<String, RuleBo> refreshRuleBoList(Class context) {
+    public Map<String, RuleBo> refreshRuleBoList(Class context, Set<String> ruleNameSet) {
         conditionMap = new HashMap<>();
         conditionGroupMap = new HashMap<>();
         actionMap = new HashMap<>();
         tagAnnotationMap = new HashMap<>();
-        
-        List<TReRule> ruleList = ruleService.selectList(null);
+
+        Map<String, RuleBo> ruleBoMap = new HashMap<>();
         Set<String> conditionGroupNameSet = new HashSet<>();
         Set<String> conditionNameAllSet = new HashSet<>();
         Set<String> actionNameSet = new HashSet<>();
         Set<String> elseActionNameSet = new HashSet<>();
 
+        QueryWrapper<TReRule> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda()
+                .in(TReRule::getRuleName, ruleNameSet);
+        List<TReRule> ruleList = ruleMapper.selectList(queryWrapper);
         ruleList.forEach(r -> {
+            RuleBo ruleBo = ruleBoMap.get(r.getRuleName());
+            if (ruleBo != null) {
+                return;
+            }
             String conditionGroupName = r.getCondGrpName();
             String actionNameListStr = r.getActnNameList();
             if (!Strings.isBlank(actionNameListStr)) {

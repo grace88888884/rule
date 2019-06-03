@@ -23,7 +23,7 @@
 //    @ResponseBody
 //    @RequestMapping("/getParamName")
 //    public List<String> getParamName() {
-//        Map<String, RuleBo> ruleBoMap = ruleManager.getRuleBoList();
+//        Map<String, RuleBo> ruleBoMap = ruleManager.getRuleFlowBoList();
 //        Collection<RuleBo> values = ruleBoMap.values();
 //        List<TagBo> inputTagList = new ArrayList<>();
 //        for (RuleBo ruleBo : values) {
@@ -35,9 +35,9 @@
 //
 //
 //    @ResponseBody
-//    @RequestMapping("/refreshRuleBoList")
-//    public boolean refreshRuleBoList() {
-//        Map<String, RuleBo> ruleBoMap = ruleManager.refreshRuleBoList();
+//    @RequestMapping("/refreshRuleFlowBoList")
+//    public boolean refreshRuleFlowBoList() {
+//        Map<String, RuleBo> ruleBoMap = ruleManager.refreshRuleFlowBoList();
 //        Constants.ruleBoMap = ruleBoMap;
 //        return true;
 //    }
@@ -46,7 +46,7 @@
 //    @ResponseBody
 //    @RequestMapping("/test")
 //    public Map<String, Object> test(@RequestParam Map<String, String> param) {
-////        Map<String, Object> resultMap = ruleManager.executeRule(param);
+////        Map<String, Object> resultMap = ruleManager.executeRuleFlow(param);
 ////        return resultMap;
 //    return null;
 //    }

@@ -1,7 +1,7 @@
 package com.yy.testrule.dao.service;
 
 import com.yy.testrule.dao.entity.TReMerStat;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>

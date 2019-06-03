@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.yy.testruleonline.dao.entity.TReRule">
         <id column="id" property="id" />
-        <result column="rule_name" property="ruleName" />
+        <result column="rule_name" property="ruleFlowName" />
         <result column="rule_desc" property="ruleDesc" />
         <result column="cond_grp_name" property="condGrpName" />
         <result column="actn_name_list" property="actnNameList" />

@@ -1,6 +1,6 @@
 package com.yy.testruledemo.tag;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.googlecode.aviator.runtime.type.AviatorDecimal;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 import com.yy.testrule.common.enums.SelfDefineFunctionType;
@@ -29,9 +29,9 @@ public class DayAmtStatLmt1Tag extends AbstractTagFunction<MmsContext> implement
     @Override
     public AviatorObject calTagValue(MmsContext context) {
         String merNo = context.getMmsTagBo().getMerNo();
-        EntityWrapper<TReMerStat> wrapper = new EntityWrapper<>();
+        QueryWrapper<TReMerStat> wrapper = new QueryWrapper<>();
         wrapper.eq("mer_no", merNo);
-        TReMerStat merStat = merStatService.selectOne(wrapper);
+        TReMerStat merStat = merStatService.getBaseMapper().selectOne(wrapper);
         if (merStat == null) {
             merStat = new TReMerStat();
         }
@@ -44,9 +44,9 @@ public class DayAmtStatLmt1Tag extends AbstractTagFunction<MmsContext> implement
     public boolean doAction(MmsContext mmsContext, boolean isSatisfied) {
         if(isSatisfied){
             String merNo = mmsContext.getMmsTagBo().getMerNo();
-            EntityWrapper<TReMerStat> wrapper = new EntityWrapper<>();
+            QueryWrapper<TReMerStat> wrapper = new QueryWrapper<>();
             wrapper.eq("mer_no", merNo);
-            TReMerStat merStat = merStatService.selectOne(wrapper);
+            TReMerStat merStat = merStatService.getBaseMapper().selectOne(wrapper);
             merStat.setDayAmtStat(merStat.getDayAmtStat().add(BigDecimal.ONE));
             merStatService.updateById(merStat);
         }
