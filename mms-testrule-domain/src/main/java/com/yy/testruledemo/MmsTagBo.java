@@ -12,16 +12,16 @@ import java.math.BigDecimal;
 
 @RuleTagCollection
 public class MmsTagBo {
-    @RuleTag(tagName = "dayAmtPolicyLmt", tagType = TagType.CACULATION, tagDesc = "日金额限额", tagFun = DayAmtPolicyLmt1Tag.class)
+    @RuleTag(tagName = "dayAmtPolicyLmt", tagType = TagType.CACULATION_NUM, tagDesc = "日金额限额", tagFun = DayAmtPolicyLmt1Tag.class)
     BigDecimal dayAmtPolicyLmt;
 
-    @RuleTag(tagName = "dayAmtStatLmt", tagType = TagType.CACULATION, tagDesc = "日金额统计", tagFun = DayAmtStatLmt1Tag.class)
+    @RuleTag(tagName = "dayAmtStatLmt", tagType = TagType.CACULATION_NUM, tagDesc = "日金额统计", tagFun = DayAmtStatLmt1Tag.class)
     BigDecimal dayAmtStatLmt;
 
     @RuleTag(tagName = "merNo", tagType = TagType.STRING, tagDesc = "商户号码")
     String merNo;
 
-    @RuleTag(tagName = "mmsType", tagType = TagType.CACULATION, tagDesc = "商户类型", tagFun = MmsTypeTag.class, tagRange = MmsType.class)
+    @RuleTag(tagName = "mmsType", tagType = TagType.CACULATION_ENUM, tagDesc = "商户类型", tagFun = MmsTypeTag.class, tagRange = MmsType.class)
     String mmsType;
 
 

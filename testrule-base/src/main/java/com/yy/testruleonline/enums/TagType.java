@@ -9,7 +9,9 @@ public enum TagType implements IEnum {
     ENUM("E", "枚举"),
     STRING("S", "字符"),
     FUCTION("F", "函数"),
-    CACULATION("C", "计算"),
+    CACULATION_NUM("CN", "计算数值"),
+    CACULATION_STRING("CS", "计算字符"),
+    CACULATION_ENUM("CE", "计算枚举"),
     NUM("N", "数值型");
     private String code;
     private String desc;

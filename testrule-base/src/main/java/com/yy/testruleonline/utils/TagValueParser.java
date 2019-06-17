@@ -1,20 +1,17 @@
 package com.yy.testruleonline.utils;
 
 import com.googlecode.aviator.AviatorEvaluator;
-import com.sun.javafx.css.Rule;
 import com.yy.testruleonline.bo.CondBo;
 import com.yy.testruleonline.bo.TagBo;
 import com.yy.testruleonline.enums.CondType;
 import com.yy.testruleonline.enums.ExceptionType;
 import com.yy.testruleonline.enums.TagType;
-import com.yy.testruleonline.exceptions.ExceptionUtils;
 import com.yy.testruleonline.exceptions.RuleException;
 import com.yy.testruleonline.rule.annotation.RuleTag;
 import com.yy.testruleonline.rule.annotation.RuleTagCollection;
 import com.yy.testruleonline.rule.function.tag.AbstractTagFunction;
 
 import java.lang.reflect.Field;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -99,7 +96,9 @@ public class TagValueParser {
                         tagField.set(input,parseResult);
                     }
                     break;
-                case CACULATION:
+                case CACULATION_NUM:
+                case CACULATION_ENUM:
+                case CACULATION_STRING:
                     if(parseResult==null) {
                         Class funClass = tagBo.getRuleTag().tagFun();
                         Object bean = SpringBeanFactory.getBean(funClass);

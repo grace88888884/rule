@@ -8,7 +8,7 @@ import com.yy.testruleonline.enums.TagType;
 import java.io.Serializable;
 
 public enum  ParamType implements IEnum {
-    MER_TYPE ("merType","",TagType.CACULATION) ,
+    MER_TYPE ("merType","",TagType.CACULATION_NUM) ,
     MER_NO ("merNo","",TagType.FUCTION) ,
     DAY_LMT1("dayLmt1","",TagType.FUCTION);
 
