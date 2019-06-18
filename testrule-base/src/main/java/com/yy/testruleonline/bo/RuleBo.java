@@ -1,18 +1,28 @@
 package com.yy.testruleonline.bo;
 
 
+import com.yy.testruleonline.dao.entity.TReCond;
 import com.yy.testruleonline.dao.entity.TReRule;
 import com.yy.testruleonline.rule.function.action.IForceAction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RuleBo {
     private List<ActnBo> actnBoList=new ArrayList<>();
     private List<ActnBo> elseActnBoList=new ArrayList<>();
-    private CondGrpBo condGrpBo;
-    List<IForceAction> forceActionList=new ArrayList<>();
+    private List<IForceAction> forceActionList=new ArrayList<>();
     private TReRule rule;
+    private Map<String, CondBo> condBoMap;
+
+    public Map<String, CondBo> getCondBoMap() {
+        return condBoMap;
+    }
+
+    public void setCondBoMap(Map<String, CondBo> condBoMap) {
+        this.condBoMap = condBoMap;
+    }
 
     public TReRule getRule() {
         return rule;
@@ -38,13 +48,6 @@ public class RuleBo {
         this.elseActnBoList = elseActnBoList;
     }
 
-    public CondGrpBo getCondGrpBo() {
-        return condGrpBo;
-    }
-
-    public void setCondGrpBo(CondGrpBo condGrpBo) {
-        this.condGrpBo = condGrpBo;
-    }
 
     public List<IForceAction> getForceActionList() {
         return forceActionList;
@@ -53,6 +56,7 @@ public class RuleBo {
     public void setForceActionList(List<IForceAction> forceActionList) {
         this.forceActionList = forceActionList;
     }
+
 
 //    public List<TagBo> getInputTagList() {
 //        return inputTagList;

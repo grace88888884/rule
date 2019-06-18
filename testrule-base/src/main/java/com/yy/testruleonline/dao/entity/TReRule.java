@@ -26,14 +26,25 @@ public class TReRule extends Model<TReRule> {
     @TableField("rule_desc")
     private String ruleDesc;
 
-    @TableField("cond_grp_name")
-    private String condGrpName;
+//    @TableField("cond_grp_name")
+//    private String condGrpName;
+
+    @TableField("rule_operation")
+    private String ruleOperation;
 
     @TableField("actn_name_list")
     private String actnNameList;
 
     @TableField("else_actn_name_list")
     private String elseActnNameList;
+
+    public String getRuleOperation() {
+        return ruleOperation;
+    }
+
+    public void setRuleOperation(String ruleOperation) {
+        this.ruleOperation = ruleOperation;
+    }
 
     public Integer getId() {
         return id;
@@ -56,17 +67,17 @@ public class TReRule extends Model<TReRule> {
     public void setRuleDesc(String ruleDesc) {
         this.ruleDesc = ruleDesc;
     }
-    public String getCondGrpName() {
-        return condGrpName;
-    }
+//    public String getCondGrpName() {
+//        return condGrpName;
+//    }
 
     public String getActnNameList() {
         return actnNameList;
     }
 
-    public void setCondGrpName(String condGrpName) {
-        this.condGrpName = condGrpName;
-    }
+//    public void setCondGrpName(String condGrpName) {
+//        this.condGrpName = condGrpName;
+//    }
 
     public void setActnNameList(String actnNameList) {
         this.actnNameList = actnNameList;
@@ -90,7 +101,7 @@ public class TReRule extends Model<TReRule> {
         "id=" + id +
         ", ruleName=" + ruleName +
         ", ruleDesc=" + ruleDesc +
-        ", condGrpName=" + condGrpName +
+        ", ruleOperation=" + ruleOperation +
         ", actnNameList=" + actnNameList +
         ", elseActnNameList=" + elseActnNameList +
         "}";

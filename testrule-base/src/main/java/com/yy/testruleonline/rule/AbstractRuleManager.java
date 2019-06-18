@@ -1,11 +1,12 @@
 package com.yy.testruleonline.rule;
 
 import com.googlecode.aviator.AviatorEvaluator;
-import com.yy.testruleonline.bo.CondGrpBo;
+import com.yy.testruleonline.bo.CondBo;
 import com.yy.testruleonline.bo.RuleBo;
 import com.yy.testruleonline.bo.RuleFlowBo;
 import com.yy.testruleonline.dao.service.impl.RuleServiceImpl;
 import com.yy.testruleonline.enums.ExceptionType;
+import com.yy.testruleonline.enums.FunctionType;
 import com.yy.testruleonline.enums.RuleRunResult;
 import com.yy.testruleonline.exceptions.ExceptionUtils;
 import com.yy.testruleonline.exceptions.RuleException;
@@ -19,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.yy.testruleonline.utils.Constants.conditionGroupEquation;
 
 public abstract class AbstractRuleManager<R, T> {
     private ThreadLocal<T> contextThreadLocal = new ThreadLocal<>();
@@ -76,8 +76,8 @@ public abstract class AbstractRuleManager<R, T> {
         return responseParam;
     }
 
-    private Map<String, Object> doExecuteRuleFlow(T context, String ruleName, Map<String, Object> responseParam) {
-        RuleFlowBo ruleFlowBo = getRuleFlowBoList().get(ruleName);
+    private Map<String, Object> doExecuteRuleFlow(T context, String ruleFlowName, Map<String, Object> responseParam) {
+        RuleFlowBo ruleFlowBo = getRuleFlowBoList().get(ruleFlowName);
         boolean isRuleFlowSatisfied = true;
         //若找不到规则流
         if (ruleFlowBo == null) {
@@ -116,13 +116,14 @@ public abstract class AbstractRuleManager<R, T> {
     private boolean doExecuteRule(T context, RuleBo ruleBo, Map<String, Object> responseParam) {
         boolean isSatisfied = false;
         //规则
-        CondGrpBo condGrpBo = ruleBo.getCondGrpBo();
+        String ruleOperation = ruleBo.getRule().getRuleOperation();
+        Map<String, CondBo> condBoMap = ruleBo.getCondBoMap();
         Map<String, Object> env = new HashMap<>();
-        env.put(Constants.conditionGroupBo, condGrpBo);
+        env.put(Constants.ruleOperation, ruleOperation);
         env.put(Constants.context, context);
+        env.put(Constants.condBoMap, condBoMap);
         try {
-            StringBuilder stringBuilder = new StringBuilder().append(conditionGroupEquation).append("('").append(Constants.conditionGroupBo).append("')");
-         
+            StringBuilder stringBuilder = new StringBuilder().append(FunctionType.RULE_OPERATION).append("('").append(Constants.ruleOperation).append("')");
             isSatisfied = (boolean) AviatorEvaluator.execute(stringBuilder.toString(), env);
             System.out.println("isSatisfiedCondition:" + isSatisfied + "\n");
         } catch (Exception e) {

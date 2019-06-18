@@ -8,12 +8,11 @@ import java.util.Map;
 public class Constants {
    public static Map<String, RuleFlowBo> ruleFlowBoMap;
 
-   public final static String conditionGroupEquation = "conditionGroupRelation";
-   public final static String conditionOperationEquation = "conditionOperation";
    public final static String conditionDetailBo = "conditionDetailBo";
 //   public final static String conditionInput = "input";
-   public final static String conditionGroupBo = "conditionGroupBo";
+   public final static String ruleOperation = "ruleOperation";
    public final static String context = "context";
+   public final static String condBoMap = "condBoMap";
    public final static String ruleException = "ruleException";
 
 
