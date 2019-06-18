@@ -27,7 +27,7 @@ public class TestController {
         authContext = new AuthContext();
         authContext.setMerNo(merNo);
         authContext.setMerType(merType);
-        boolean isSatisfied = requestHelper.executeRule(authContext, "dayLmt2");
+        boolean isSatisfied = requestHelper.executeRule(authContext, "dayLmtFlow");
         System.out.println("isSatisfied:"+isSatisfied);
         return authContext;
     }
